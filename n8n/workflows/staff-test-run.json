@@ -1,7 +1,6 @@
 {
   "id": "wf_staff_test_run",
   "name": "Staff Test Run",
-  "active": false,
   "nodes": [
     {
       "parameters": {
@@ -10,79 +9,488 @@
         "responseMode": "responseNode",
         "options": {}
       },
+      "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        220,
+        0,
         300
       ],
-      "id": "01948b83-0001-7000-8000-000000000001",
-      "name": "Webhook",
       "webhookId": "5b7c1f1e-3a52-4d7e-9a61-0c2f6a3e1a03"
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "=http://leads:8081/templates/{{ $json.body.templateKey }}/render",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"variables\": {{ JSON.stringify($json.body.variables || {}) }},\n  \"test\": true\n}",
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Validate the ops console request. Recipient is NOT taken from the request: always staff-test@tidewave.test.\nconst body = $input.first().json.body || {};\nconst errors = [];\nconst templateKey = typeof body.templateKey === 'string' ? body.templateKey.trim() : '';\nif (!/^[a-z0-9][a-z0-9-]{0,63}$/.test(templateKey)) errors.push('templateKey is missing or invalid');\nconst variables = body.variables ?? {};\nif (typeof variables !== 'object' || Array.isArray(variables) || variables === null) errors.push('variables must be an object');\nconst requestId = typeof body.requestId === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(body.requestId) ? body.requestId : null;\nreturn [{ json: {\n  valid: errors.length === 0,\n  errors,\n  templateKey,\n  variables: errors.length ? {} : variables,\n  requestId,\n  requestedBy: typeof body.requestedBy === 'string' ? body.requestedBy.slice(0, 40) : 'unknown',\n} }];"
+      },
+      "name": "Validate Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "request-valid?",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
       },
+      "name": "Request Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.errors.join('; ') } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "name": "Respond Bad Request",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://leads:8081/templates",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {
+          "timeout": 4000
+        }
+      },
+      "name": "List Templates",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        480,
+        660,
         300
       ],
-      "id": "01948b83-0001-7000-8000-000000000002",
-      "name": "Render Template",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cred_tidewave_automation",
           "name": "Tidewave Automation"
         }
-      }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "fromEmail": "hello@tidewave.test",
-        "toEmail": "={{ $('Webhook').first().json.body.variables.email || 'staff-test@tidewave.test' }}",
-        "subject": "={{ $json.subject }}",
-        "html": "={{ $json.html }}",
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'Could not load templates from the leads service. Nothing was sent.' } }}",
+        "options": {
+          "responseCode": 502
+        }
+      },
+      "name": "Respond Templates Unavailable",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Only approved templates may be test-sent; all required variables must be filled in.\nconst req = $('Validate Request').first().json;\nconst list = $input.all().map(i => i.json);\nconst templates = Array.isArray(list[0]) ? list[0] : list;   // tolerate array-in-one-item\nconst tpl = templates.find(t => t && t.key === req.templateKey);\nconst STAFF_TEST_INBOX = 'staff-test@tidewave.test';\n\nlet decision = 'send';\nlet reason = 'approved template, required variables present';\nlet httpStatus = 200;\nif (!tpl) { decision = 'skip'; reason = `template '${req.templateKey}' does not exist`; httpStatus = 404; }\nelse if (tpl.status !== 'approved') { decision = 'skip'; reason = `template '${req.templateKey}' is ${tpl.status}, only approved templates can be test-sent`; httpStatus = 422; }\nelse {\n  const missing = (tpl.variables || [])\n    .filter(v => v.required && String(req.variables[v.name] ?? '').trim() === '')\n    .map(v => v.label || v.name);\n  if (missing.length) { decision = 'skip'; reason = `missing required fields: ${missing.join(', ')}`; httpStatus = 422; }\n}\n\nreturn [{ json: {\n  decision, reason, httpStatus,\n  workflow: 'staff-test-run',\n  eventId: req.requestId || `exec_${$execution.id}`,\n  // A double-click resends the same requestId -> same key -> only one email.\n  dedupKey: `staff-test-run:${req.requestId || 'exec_' + $execution.id}`,\n  templateKey: req.templateKey,\n  to: STAFF_TEST_INBOX,\n  variables: req.variables,\n  requestedBy: req.requestedBy,\n} }];"
+      },
+      "name": "Check Template",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-decision-send",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "send",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "send"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-decision-skip",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "skip",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "skip"
+            }
+          ]
+        },
         "options": {}
       },
+      "name": "Route Decision",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.reason } }}",
+        "options": {
+          "responseCode": 422
+        }
+      },
+      "name": "Respond Rejected",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1320,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Atomically claim the right to send this message once.\n-- claimed=true  -> this execution owns the send (new key, or the previous attempt 'failed').\n-- claimed=false -> someone else has it; status tells us 'sent' (done) or 'pending' (in flight).\n-- No row at all -> a concurrent claim is still uncommitted: treat as in flight.\nWITH ins AS (\n  INSERT INTO automation.message_claims (dedup_key, workflow, event_id, status)\n  VALUES ($1, $2, $3, 'pending')\n  ON CONFLICT (dedup_key) DO UPDATE\n    SET status = 'pending',\n        attempts = automation.message_claims.attempts + 1,\n        event_id = EXCLUDED.event_id,\n        updated_at = NOW()\n    WHERE automation.message_claims.status = 'failed'\n  RETURNING dedup_key, status, attempts\n)\nSELECT dedup_key, status, attempts, true AS claimed FROM ins\nUNION ALL\nSELECT dedup_key, status, attempts, false AS claimed\n  FROM automation.message_claims\n WHERE dedup_key = $1 AND NOT EXISTS (SELECT 1 FROM ins);",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey, $('Route Decision').first().json.workflow, $('Route Decision').first().json.eventId] }}"
+        }
+      },
+      "name": "Claim Send (idempotency)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1320,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
+        }
+      },
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "claimed?",
+              "leftValue": "={{ $json.claimed === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Claimed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "already-sent?",
+              "leftValue": "={{ $json.status === 'sent' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Already Sent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, outcome: 'duplicate', detail: 'already sent, not sending again', dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "name": "Respond Duplicate",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1980,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'in_progress', detail: 'another delivery is sending this message, retry later', dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "name": "Respond In Progress",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1980,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'retry', detail: 'idempotency store unavailable, nothing sent' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "name": "Respond Claim Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1540,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://leads:8081/templates/{{ encodeURIComponent($('Route Decision').first().json.templateKey) }}/render",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {
+          "timeout": 4000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ variables: $('Route Decision').first().json.variables, test: true }) }}"
+      },
+      "name": "Render Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cred_tidewave_automation",
+          "name": "Tidewave Automation"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "fromEmail": "Tidewave Music <hello@tidewave.test>",
+        "toEmail": "={{ 'staff-test@tidewave.test' }}",
+        "subject": "={{ $json.subject }}",
+        "emailFormat": "both",
+        "text": "={{ $json.text }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Send Email",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        740,
+        1980,
         300
       ],
-      "id": "01948b83-0001-7000-8000-000000000003",
-      "name": "Send Test Email",
       "credentials": {
         "smtp": {
           "id": "cred_mailpit_smtp",
           "name": "Mailpit SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE automation.message_claims\n   SET status = 'sent', last_error = NULL, updated_at = NOW()\n WHERE dedup_key = $1\nRETURNING dedup_key, status, attempts;",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey] }}"
+        }
+      },
+      "name": "Mark Sent",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2200,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
         }
       }
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\n  \"ok\": true,\n  \"subject\": \"{{ $('Render Template').first().json.subject }}\"\n}",
-        "options": {}
+        "responseBody": "={{ { ok: true, outcome: 'sent', to: $('Route Decision').first().json.to, template: $('Route Decision').first().json.templateKey, subject: $('Render Template').first().json.subject, dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 200
+        }
       },
+      "name": "Respond Sent",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1000,
+        2420,
         300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Release the claim so an engine retry / redelivery can try again.\nUPDATE automation.message_claims\n   SET status = 'failed', last_error = $2, updated_at = NOW()\n WHERE dedup_key = $1\nRETURNING dedup_key, status, attempts, last_error;",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey, String($json.error?.message ?? $json.error ?? 'unknown error').slice(0, 500)] }}"
+        }
+      },
+      "name": "Mark Failed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1980,
+        520
       ],
-      "id": "01948b83-0001-7000-8000-000000000004",
-      "name": "Respond to Webhook"
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'failed', detail: $('Mark Failed').first().json.last_error, dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 502
+        }
+      },
+      "name": "Respond Failed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2200,
+        520
+      ]
     }
   ],
   "connections": {
@@ -90,7 +498,137 @@
       "main": [
         [
           {
+            "node": "Validate Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Request": {
+      "main": [
+        [
+          {
+            "node": "Request Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Valid?": {
+      "main": [
+        [
+          {
+            "node": "List Templates",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Bad Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Templates": {
+      "main": [
+        [
+          {
+            "node": "Check Template",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Templates Unavailable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Template": {
+      "main": [
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Decision": {
+      "main": [
+        [
+          {
+            "node": "Claim Send (idempotency)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Rejected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim Send (idempotency)": {
+      "main": [
+        [
+          {
+            "node": "Claimed?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Claim Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claimed?": {
+      "main": [
+        [
+          {
             "node": "Render Template",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Already Sent?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already Sent?": {
+      "main": [
+        [
+          {
+            "node": "Respond Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond In Progress",
             "type": "main",
             "index": 0
           }
@@ -101,18 +639,54 @@
       "main": [
         [
           {
-            "node": "Send Test Email",
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Failed",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Send Test Email": {
+    "Send Email": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Mark Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Sent": {
+      "main": [
+        [
+          {
+            "node": "Respond Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Failed": {
+      "main": [
+        [
+          {
+            "node": "Respond Failed",
             "type": "main",
             "index": 0
           }
@@ -122,6 +696,11 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none"
-  }
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "timezone": "Africa/Lagos"
+  },
+  "active": false
 }

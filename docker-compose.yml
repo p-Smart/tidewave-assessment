@@ -43,6 +43,10 @@ services:
       TZ: Africa/Lagos
       WEBHOOK_URL: http://localhost:7678/
       NODE_FUNCTION_ALLOW_BUILTIN: crypto
+      # Workflows read only this one variable (HMAC check of inbound engine/leads events).
+      # Same assessment-only value the leads service already gets below.
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      TIDEWAVE_EVENTS_SIGNING_SECRET: whsec_tidewave_demo_2f9a
     ports: ["7678:5678"]
     entrypoint: ["tini", "--", "/bin/sh", "/tidewave/start.sh"]
     volumes:

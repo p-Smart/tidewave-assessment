@@ -1,163 +1,697 @@
 {
   "id": "wf_street_team_lead",
   "name": "Street Team Lead Application",
-  "active": false,
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
         "path": "street-team-lead",
         "responseMode": "responseNode",
-        "options": {}
+        "options": {
+          "rawBody": true
+        }
       },
+      "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        220,
+        0,
         300
       ],
-      "id": "01948b81-0001-7000-8000-000000000001",
-      "name": "Webhook",
       "webhookId": "5b7c1f1e-3a52-4d7e-9a61-0c2f6a3e1a01"
     },
     {
       "parameters": {
-        "method": "GET",
-        "url": "=http://leads:8081/leads/{{ $json.body.data.leadId }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "httpHeaderAuth",
-        "options": {
-          "maxTries": 5,
-          "waitBetweenTries": 1000
-        }
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Verify X-Tidewave-Signature (t=<unix>,v1=<hex HMAC-SHA256 of \"t.rawBody\">) against the RAW body.\n// Never throws: returns { valid:false, reason } so the workflow can answer 401 and log why.\nconst crypto = require('crypto');\nconst item = $input.first();\nconst headers = item.json.headers || {};\nconst sigHeader = String(headers['x-tidewave-signature'] || '');\nconst headerEventId = String(headers['x-tidewave-event-id'] || '');\nconst secret = $env.TIDEWAVE_EVENTS_SIGNING_SECRET;\nconst fail = (reason) => [{ json: { valid: false, reason, eventId: headerEventId || null } }];\n\nif (!secret) return fail('signing secret not configured on n8n');\n\nlet raw = null;\nconst binKey = item.binary ? Object.keys(item.binary)[0] : null;\nif (binKey) {\n  try {\n    raw = (await this.helpers.getBinaryDataBuffer(0, binKey)).toString('utf8');\n  } catch (e) {\n    const b = item.binary[binKey];\n    if (b && b.data && !b.id) raw = Buffer.from(b.data, 'base64').toString('utf8');\n  }\n}\nif (raw === null) return fail('raw body unavailable');\n\nconst parts = {};\nfor (const p of sigHeader.split(',')) {\n  const i = p.indexOf('=');\n  if (i > 0) parts[p.slice(0, i).trim()] = p.slice(i + 1).trim();\n}\nif (!/^\\d+$/.test(parts.t || '') || !/^[0-9a-f]{64}$/i.test(parts.v1 || '')) {\n  return fail('missing or malformed signature header');\n}\nconst expected = crypto.createHmac('sha256', secret).update(`${parts.t}.${raw}`).digest('hex');\nif (!crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(parts.v1.toLowerCase(), 'hex'))) {\n  return fail('signature mismatch');\n}\n\nlet event;\ntry { event = JSON.parse(raw); } catch (e) { return fail('body is not valid JSON'); }\nif (!event || typeof event.id !== 'string' || typeof event.type !== 'string' || typeof event.data !== 'object' || event.data === null) {\n  return fail('event shape invalid');\n}\nif (headerEventId && headerEventId !== event.id) return fail('X-Tidewave-Event-Id does not match body id');\n\n// Replay protection is done by the idempotency ledger (dedup keys), not by timestamp age:\n// the engine test clock (/__tools/clock) can legitimately shift signing times.\nreturn [{ json: {\n  valid: true,\n  reason: 'signature ok',\n  eventId: event.id,\n  type: event.type,\n  sequence: event.sequence ?? null,\n  createdAt: event.createdAt ?? null,\n  signedAt: Number(parts.t),\n  data: event.data,\n} }];"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "name": "Verify Signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "signature-valid?",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Signature Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
       "position": [
         440,
         300
-      ],
-      "id": "01948b81-0001-7000-8000-000000000002",
-      "name": "Get Lead",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "cred_tidewave_automation",
-          "name": "Tidewave Automation"
-        }
-      }
+      ]
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "http://leads:8081/templates/street-team-prospect/render",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"variables\": {\n    \"firstName\": \"{{ $json.firstName }}\",\n    \"score\": \"{{ $json.score }}\"\n  },\n  \"test\": false\n}",
-        "options": {}
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'invalid signature', reason: $json.reason } }}",
+        "options": {
+          "responseCode": 401
+        }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "name": "Respond Unauthorized",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-event-type-lead-created",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "lead.created",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lead.created"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "other"
+        }
+      },
+      "name": "Route Event Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
       "position": [
         660,
         300
-      ],
-      "id": "01948b81-0001-7000-8000-000000000003",
-      "name": "Render Template",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "cred_tidewave_automation",
-          "name": "Tidewave Automation"
-        }
-      }
+      ]
     },
     {
       "parameters": {
-        "jsCode": "const item = $input.first().json;\nconst lead = $('Get Lead').first().json;\nlet subject = item.subject;\nif (lead.score >= 85) {\n  subject = \"You're now an active Tidewave rep!\";\n}\nreturn [{ json: { ...item, subject, leadEmail: lead.email, leadId: lead.id } }];"
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, outcome: 'ignored', type: $json.type } }}",
+        "options": {
+          "responseCode": 200
+        }
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "name": "Respond Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=http://leads:8081/leads/{{ encodeURIComponent($json.data.leadId ?? '') }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {
+          "timeout": 4000
+        }
+      },
+      "name": "Get Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         880,
         300
       ],
-      "id": "01948b81-0001-7000-8000-000000000004",
-      "name": "Format Subject",
-      "notes": "Format email subject according to rep score"
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cred_tidewave_automation",
+          "name": "Tidewave Automation"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 1000,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "fromEmail": "hello@tidewave.test",
-        "toEmail": "={{ $json.leadEmail }}",
-        "subject": "={{ $json.subject }}",
-        "html": "={{ $json.html }}",
-        "options": {}
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'retry', detail: 'could not load lead, nothing sent' } }}",
+        "options": {
+          "responseCode": 503
+        }
       },
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
+      "name": "Respond Lead Fetch Failed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// lead.created -> decide using the lead as stored by the leads service (not the event payload).\nconst ev = $('Verify Signature').first().json;\nconst lead = $input.first().json;            // GET /leads/{id}\nconst email = String(lead.email || '').trim().toLowerCase();\n// No screening booking page exists yet on the public site; this is the URL given in the\n// template metadata. Change here only.\nconst SCREENING_URL = 'http://localhost:7080/street-team/screening';\nconst NEXT_STEP_TEXT = 'The next step is a short screening call with our team. Please choose a time that suits you using the button below.';\n\nlet decision = 'send';\nlet reason = 'lead qualified for a screening invite';\nif (lead.id !== ev.data.leadId) { decision = 'skip'; reason = 'leads service returned a different lead'; }\nelse if (lead.status !== 'screening_invite') { decision = 'skip'; reason = `lead status is ${lead.status}; only screening_invite gets this email`; }\nelse if (lead.duplicateOf) { decision = 'skip'; reason = `lead is a duplicate of ${lead.duplicateOf}`; }\nelse if (lead.consent !== true) { decision = 'skip'; reason = 'lead has no consent'; }\nelse if (!/^[^\\s@]+@[^\\s@]+\\.test$/.test(email)) { decision = 'skip'; reason = 'recipient missing or outside the .test domain'; }\n\nreturn [{ json: {\n  decision, reason,\n  workflow: 'street-team-lead',\n  eventId: ev.eventId,\n  dedupKey: `street-team-prospect:${lead.id}`, // one follow-up email per application\n  templateKey: 'street-team-prospect',\n  to: email,\n  variables: {\n    firstName: String(lead.firstName || '').trim() || 'there',\n    nextStepText: NEXT_STEP_TEXT,\n    screeningUrl: SCREENING_URL,\n  },\n  leadId: lead.id,\n  leadStatus: lead.status ?? null,\n} }];"
+      },
+      "name": "Build Prospect Job",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         1100,
         300
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-decision-send",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "send",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "send"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-decision-skip",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "skip",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "skip"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-decision-retry",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "retry",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "retry"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Route Decision",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1320,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, outcome: 'skipped', reason: $json.reason } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "name": "Respond Skipped",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1540,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'retry', reason: $json.reason } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "name": "Respond Retry Later",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1540,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Atomically claim the right to send this message once.\n-- claimed=true  -> this execution owns the send (new key, or the previous attempt 'failed').\n-- claimed=false -> someone else has it; status tells us 'sent' (done) or 'pending' (in flight).\n-- No row at all -> a concurrent claim is still uncommitted: treat as in flight.\nWITH ins AS (\n  INSERT INTO automation.message_claims (dedup_key, workflow, event_id, status)\n  VALUES ($1, $2, $3, 'pending')\n  ON CONFLICT (dedup_key) DO UPDATE\n    SET status = 'pending',\n        attempts = automation.message_claims.attempts + 1,\n        event_id = EXCLUDED.event_id,\n        updated_at = NOW()\n    WHERE automation.message_claims.status = 'failed'\n  RETURNING dedup_key, status, attempts\n)\nSELECT dedup_key, status, attempts, true AS claimed FROM ins\nUNION ALL\nSELECT dedup_key, status, attempts, false AS claimed\n  FROM automation.message_claims\n WHERE dedup_key = $1 AND NOT EXISTS (SELECT 1 FROM ins);",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey, $('Route Decision').first().json.workflow, $('Route Decision').first().json.eventId] }}"
+        }
+      },
+      "name": "Claim Send (idempotency)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1540,
+        300
       ],
-      "id": "01948b81-0001-7000-8000-000000000005",
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
+        }
+      },
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "claimed?",
+              "leftValue": "={{ $json.claimed === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Claimed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "already-sent?",
+              "leftValue": "={{ $json.status === 'sent' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Already Sent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, outcome: 'duplicate', detail: 'already sent, not sending again', dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "name": "Respond Duplicate",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2200,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'in_progress', detail: 'another delivery is sending this message, retry later', dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "name": "Respond In Progress",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2200,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, outcome: 'retry', detail: 'idempotency store unavailable, nothing sent' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "name": "Respond Claim Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://leads:8081/templates/{{ encodeURIComponent($('Route Decision').first().json.templateKey) }}/render",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {
+          "timeout": 4000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ variables: $('Route Decision').first().json.variables, test: false }) }}"
+      },
+      "name": "Render Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cred_tidewave_automation",
+          "name": "Tidewave Automation"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Last check before sending a street-team email: Tidewave never tells an applicant they are\n// hired / active / field ready. Throwing here routes to Mark Failed and nothing is sent.\nconst r = $input.first().json;\nconst FORBIDDEN = /\\b(hired|active|field[ -]?ready)\\b/i;\nconst hit = (String(r.subject || '') + ' \\n ' + String(r.text || '')).match(FORBIDDEN);\nif (hit) throw new Error(`content guard: rendered email contains forbidden wording \"${hit[0]}\"`);\nif (!r.html || !r.subject) throw new Error('content guard: render returned no subject/html');\nreturn [{ json: r }];"
+      },
+      "name": "Content Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        300
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "fromEmail": "Tidewave Music <hello@tidewave.test>",
+        "toEmail": "={{ $('Route Decision').first().json.to }}",
+        "subject": "={{ $json.subject }}",
+        "emailFormat": "both",
+        "text": "={{ $json.text }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
       "name": "Send Email",
-      "onError": "continueRegularOutput",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2420,
+        300
+      ],
       "credentials": {
         "smtp": {
           "id": "cred_mailpit_smtp",
           "name": "Mailpit SMTP"
         }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE automation.message_claims\n   SET status = 'sent', last_error = NULL, updated_at = NOW()\n WHERE dedup_key = $1\nRETURNING dedup_key, status, attempts;",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey] }}"
+        }
+      },
+      "name": "Mark Sent",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2640,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
+        }
       }
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "=http://leads:8081/leads/{{ $('Format Subject').first().json.leadId }}/activity",
+        "url": "=http://leads:8081/leads/{{ encodeURIComponent($('Route Decision').first().json.leadId) }}/activity",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "httpHeaderAuth",
+        "options": {
+          "timeout": 4000
+        },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"type\": \"email_sent\",\n  \"detail\": {\n    \"subject\": \"{{ $('Format Subject').first().json.subject }}\"\n  }\n}",
-        "options": {}
+        "jsonBody": "={{ JSON.stringify({ type: 'email_sent', detail: { template: $('Route Decision').first().json.templateKey, subject: $('Render Template').first().json.subject, dedupKey: $('Route Decision').first().json.dedupKey, eventId: $('Route Decision').first().json.eventId } }) }}"
       },
+      "name": "Record Lead Activity",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1320,
+        2860,
         300
       ],
-      "id": "01948b81-0001-7000-8000-000000000006",
-      "name": "Record Activity",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cred_tidewave_automation",
           "name": "Tidewave Automation"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, outcome: 'sent', to: $('Route Decision').first().json.to, template: $('Route Decision').first().json.templateKey, subject: $('Render Template').first().json.subject, dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "name": "Respond Sent",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3080,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Release the claim so an engine retry / redelivery can try again.\nUPDATE automation.message_claims\n   SET status = 'failed', last_error = $2, updated_at = NOW()\n WHERE dedup_key = $1\nRETURNING dedup_key, status, attempts, last_error;",
+        "options": {
+          "queryReplacement": "={{ [$('Route Decision').first().json.dedupKey, String($json.error?.message ?? $json.error ?? 'unknown error').slice(0, 500)] }}"
+        }
+      },
+      "name": "Mark Failed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2420,
+        520
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "cred_tidewave_postgres",
+          "name": "Tidewave Postgres (automation ledger)"
         }
       }
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "{\n  \"ok\": true\n}",
-        "options": {}
+        "responseBody": "={{ { ok: false, outcome: 'failed', detail: $('Mark Failed').first().json.last_error, dedupKey: $('Route Decision').first().json.dedupKey } }}",
+        "options": {
+          "responseCode": 503
+        }
       },
+      "name": "Respond Failed",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1540,
-        300
-      ],
-      "id": "01948b81-0001-7000-8000-000000000007",
-      "name": "Respond to Webhook"
+        2640,
+        520
+      ]
     }
   ],
   "connections": {
+    "Verify Signature": {
+      "main": [
+        [
+          {
+            "node": "Signature Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Signature Valid?": {
+      "main": [
+        [
+          {
+            "node": "Route Event Type",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Unauthorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Webhook": {
       "main": [
         [
           {
+            "node": "Verify Signature",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Event Type": {
+      "main": [
+        [
+          {
             "node": "Get Lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Ignored",
             "type": "main",
             "index": 0
           }
@@ -168,7 +702,104 @@
       "main": [
         [
           {
+            "node": "Build Prospect Job",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Lead Fetch Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Decision": {
+      "main": [
+        [
+          {
+            "node": "Claim Send (idempotency)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Skipped",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Retry Later",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prospect Job": {
+      "main": [
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim Send (idempotency)": {
+      "main": [
+        [
+          {
+            "node": "Claimed?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Claim Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claimed?": {
+      "main": [
+        [
+          {
             "node": "Render Template",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Already Sent?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already Sent?": {
+      "main": [
+        [
+          {
+            "node": "Respond Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond In Progress",
             "type": "main",
             "index": 0
           }
@@ -179,18 +810,32 @@
       "main": [
         [
           {
-            "node": "Format Subject",
+            "node": "Content Guard",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Failed",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Format Subject": {
+    "Content Guard": {
       "main": [
         [
           {
             "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Failed",
             "type": "main",
             "index": 0
           }
@@ -201,18 +846,47 @@
       "main": [
         [
           {
-            "node": "Record Activity",
+            "node": "Mark Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Failed",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Record Activity": {
+    "Mark Sent": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Record Lead Activity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Lead Activity": {
+      "main": [
+        [
+          {
+            "node": "Respond Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Failed": {
+      "main": [
+        [
+          {
+            "node": "Respond Failed",
             "type": "main",
             "index": 0
           }
@@ -222,6 +896,11 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none"
-  }
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "timezone": "Africa/Lagos"
+  },
+  "active": false
 }
