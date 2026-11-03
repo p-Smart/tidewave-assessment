@@ -6,6 +6,15 @@ import { useRouter } from 'next/navigation';
 import { Lead, Activity } from '@/lib/types';
 import StatusBadge from '@/components/StatusBadge';
 
+/** Activity detail is a JSON object; React cannot render objects directly (OPS-005). */
+function formatDetail(detail: Activity['detail']): string {
+  if (detail === null || detail === undefined) return '';
+  if (typeof detail !== 'object') return String(detail);
+  return Object.entries(detail)
+    .map(([key, value]) => `${key}: ${typeof value === 'object' && value !== null ? JSON.stringify(value) : String(value)}`)
+    .join(', ');
+}
+
 export default function LeadDetailPage({
   params,
 }: {
@@ -144,7 +153,7 @@ export default function LeadDetailPage({
                   <td>
                     <code>{item.type}</code>
                   </td>
-                  <td>{item.detail}</td>
+                  <td>{formatDetail(item.detail)}</td>
                   <td>{item.actor}</td>
                   <td>{new Date(item.createdAt).toLocaleString()}</td>
                 </tr>

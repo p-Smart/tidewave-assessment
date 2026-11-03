@@ -89,10 +89,8 @@ export function renderTemplate(
   const renderContext: Record<string, any> = {};
   if (meta.variables && Array.isArray(meta.variables)) {
     for (const v of meta.variables) {
-      renderContext[v.name] =
-        variables && variables[v.name] !== undefined
-          ? variables[v.name]
-          : '' + variables[v.name];
+      // Missing values render as empty so template fallbacks apply, never "undefined" (LS-007).
+      renderContext[v.name] = variables?.[v.name] ?? '';
     }
   }
 

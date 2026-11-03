@@ -3,7 +3,7 @@
 **Area**: Leads Service (templates)  
 **Severity**: Medium  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — missing variables render as `''` so template fallbacks apply. Verified: Playwright `[LS-007] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

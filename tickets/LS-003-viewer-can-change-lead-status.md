@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: High  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — PATCH uses `requireAdmin` (viewer → 403); `lead_activity.actor` records the caller's role. Verified: Playwright `[LS-003] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

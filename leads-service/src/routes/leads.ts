@@ -2,24 +2,59 @@ import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import * as db from '../db';
 import { calculateScore, determineStatus } from '../scoring';
-import { sendLeadCreatedEvent } from '../events';
-import { requireStaff, requireStaffOrAutomation } from '../auth';
+import { LeadCreatedEventPayload, sendLeadCreatedEvent } from '../events';
+import { requireAdmin, requireStaff, requireStaffOrAutomation } from '../auth';
 
 export const leadsRouter = Router();
 
+// Numbers may arrive as numbers or numeric strings; missing/empty means 0.
+const numberField = (field: string, max: number) =>
+  z.preprocess(
+    (v) => (v === undefined || v === null || v === '' ? 0 : v),
+    z.coerce
+      .number({ invalid_type_error: `${field} must be a number` })
+      .refine((n) => Number.isFinite(n), `${field} must be a number`)
+      .pipe(z.number().min(0, `${field} cannot be negative`).max(max, `${field} must be at most ${max}`))
+  );
+
+// Lengths match the DB columns so bad input is a 422, not a 500 (LS-008, LS-009).
 const createLeadSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().optional().nullable(),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone is required'),
-  city: z.string().min(1, 'City is required'),
-  experienceYears: z.union([z.number(), z.string()]).optional().default(0),
-  hoursPerWeek: z.union([z.number(), z.string()]).optional().default(0),
-  source: z.string().optional().nullable(),
+  firstName: z.string().trim().min(1, 'First name is required').max(100, 'First name must be at most 100 characters'),
+  lastName: z.string().trim().max(100, 'Last name must be at most 100 characters').optional().nullable(),
+  // Stored normalised so duplicates are found regardless of case/spaces (LS-004).
+  email: z.string().trim().toLowerCase().max(255).email('Invalid email address'),
+  phone: z.string().trim().min(1, 'Phone is required').max(50, 'Phone must be at most 50 characters'),
+  city: z.string().trim().min(1, 'City is required').max(100, 'City must be at most 100 characters'),
+  experienceYears: numberField('experienceYears', 80),
+  hoursPerWeek: numberField('hoursPerWeek', 168),
+  source: z.string().trim().max(100).optional().nullable(),
   consent: z.literal(true, {
     errorMap: () => ({ message: 'Consent must be accepted' }),
   }),
 });
+
+/**
+ * National significant number: digits only, without the Nigerian/Ghanaian country code or the
+ * national trunk prefix 0. "+234 809 000 0101" and "08090000101" -> "8090000101" (LS-005).
+ */
+export function phoneKey(phone: string): string {
+  return phone.replace(/\D/g, '').replace(/^(234|233|0)/, '');
+}
+const PHONE_KEY_SQL = `regexp_replace(regexp_replace(phone, '\\D', '', 'g'), '^(234|233|0)', '')`;
+
+const newId = (prefix: string) => `${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+
+/** Deliver an outbox event after the lead is committed, and record the result (LS-006). */
+async function deliverOutboxEvent(outboxId: string, event: LeadCreatedEventPayload): Promise<void> {
+  let delivered = false;
+  try {
+    delivered = await sendLeadCreatedEvent(event);
+  } finally {
+    await db
+      .query(`UPDATE leads.event_outbox SET status = $1 WHERE id = $2`, [delivered ? 'delivered' : 'failed', outboxId])
+      .catch((err) => console.error('[Outbox] could not update status', outboxId, (err as Error).message));
+  }
+}
 
 // POST /leads (public)
 leadsRouter.post('/', async (req: Request, res: Response) => {
@@ -33,129 +68,77 @@ leadsRouter.post('/', async (req: Request, res: Response) => {
     return;
   }
 
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    city,
-    experienceYears,
-    hoursPerWeek,
-    source,
-    consent,
-  } = parseResult.data;
+  const { firstName, lastName, email, phone, city, experienceYears, hoursPerWeek, source, consent } =
+    parseResult.data;
 
   try {
-    // Duplicate check:
-    // Applications where previous consent was withdrawn are not duplicates
-    const dupQuery = `
-      SELECT id, status FROM leads.leads
-      WHERE (email = $1 OR phone = $2) AND consent_withdrawn = false
-      ORDER BY created_at ASC
-      LIMIT 1
-    `;
-    const dupRes = await db.query(dupQuery, [email, phone]);
-    const isDuplicate = dupRes.rows.length > 0;
+    // Duplicate check on normalised email / phone. Applications where previous consent was
+    // withdrawn are not duplicates. lower(trim()) also matches legacy rows stored un-normalised.
+    const dupRes = await db.query(
+      `SELECT id, status FROM leads.leads
+        WHERE (lower(trim(email)) = $1 OR ${PHONE_KEY_SQL} = $2) AND consent_withdrawn = false
+        ORDER BY created_at ASC
+        LIMIT 1`,
+      [email, phoneKey(phone)]
+    );
+    const duplicateOf: string | null = dupRes.rows[0]?.id ?? null;
 
     const score = calculateScore({ experienceYears, hoursPerWeek, city });
-    const leadId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const status = duplicateOf ? 'duplicate' : determineStatus(score);
+    const leadId = newId('lead');
+    const event: LeadCreatedEventPayload | null = duplicateOf
+      ? null
+      : {
+          id: newId('evt'),
+          type: 'lead.created',
+          createdAt: new Date().toISOString(),
+          data: { leadId, status, email, firstName },
+        };
+    const outboxId = newId('obx');
 
-    if (isDuplicate) {
-      const duplicateOf = dupRes.rows[0].id;
-      const insertQuery = `
-        INSERT INTO leads.leads (
-          id, first_name, last_name, email, phone, city,
-          experience_years, hours_per_week, source, consent,
-          consent_withdrawn, score, status, duplicate_of
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, false, $11, 'duplicate', $12)
-        RETURNING id, status, duplicate_of AS "duplicateOf"
-      `;
-      const inserted = await db.query(insertQuery, [
-        leadId,
-        firstName,
-        lastName || null,
-        email,
-        phone,
-        city,
-        experienceYears,
-        hoursPerWeek,
-        source || null,
-        consent,
-        score,
-        duplicateOf,
-      ]);
-
-      await db.query(
+    // Lead, activity and outbox row are committed together; the event is sent only afterwards.
+    const inserted = await db.withTransaction(async (client) => {
+      const row = await client.query(
+        `INSERT INTO leads.leads (
+           id, first_name, last_name, email, phone, city,
+           experience_years, hours_per_week, source, consent,
+           consent_withdrawn, score, status, duplicate_of
+         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, false, $11, $12, $13)
+         RETURNING id, status, duplicate_of AS "duplicateOf"`,
+        [leadId, firstName, lastName || null, email, phone, city, experienceYears, hoursPerWeek,
+          source || null, consent, score, status, duplicateOf]
+      );
+      await client.query(
         `INSERT INTO leads.lead_activity (id, lead_id, type, detail, actor)
-         VALUES ($1, $2, 'duplicate_detected', $3, 'system')`,
+         VALUES ($1, $2, $3, $4, 'system')`,
         [
-          `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+          newId('act'),
           leadId,
-          JSON.stringify({ duplicateOf }),
+          duplicateOf ? 'duplicate_detected' : 'application_created',
+          JSON.stringify(duplicateOf ? { duplicateOf } : { source, score, status }),
         ]
       );
-
-      res.status(201).json({
-        id: inserted.rows[0].id,
-        status: 'duplicate',
-        duplicateOf,
-      });
-      return;
-    }
-
-    const status = determineStatus(score);
-
-    const eventId = `evt_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    sendLeadCreatedEvent({
-      id: eventId,
-      type: 'lead.created',
-      createdAt: new Date().toISOString(),
-      data: {
-        leadId,
-        status,
-        email,
-        firstName,
-      },
+      if (event) {
+        await client.query(
+          `INSERT INTO leads.event_outbox (id, event_id, event_type, payload, status)
+           VALUES ($1, $2, $3, $4, 'pending')`,
+          [outboxId, event.id, event.type, JSON.stringify(event)]
+        );
+      }
+      return row.rows[0];
     });
 
-    const insertQuery = `
-      INSERT INTO leads.leads (
-        id, first_name, last_name, email, phone, city,
-        experience_years, hours_per_week, source, consent,
-        consent_withdrawn, score, status, duplicate_of
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, false, $11, $12, NULL)
-      RETURNING id, status, duplicate_of AS "duplicateOf"
-    `;
-
-    const inserted = await db.query(insertQuery, [
-      leadId,
-      firstName,
-      lastName || null,
-      email,
-      phone,
-      city,
-      experienceYears,
-      hoursPerWeek,
-      source || null,
-      consent,
-      score,
-      status,
-    ]);
-
-    await db.query(
-      `INSERT INTO leads.lead_activity (id, lead_id, type, detail, actor)
-       VALUES ($1, $2, 'application_created', $3, 'system')`,
-      [
-        `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-        leadId,
-        JSON.stringify({ source, score, status }),
-      ]
-    );
+    if (event) {
+      // Not awaited: the applicant's response must not wait for n8n. Result lands in event_outbox.
+      void deliverOutboxEvent(outboxId, event).catch((err) =>
+        console.error('[Outbox] delivery error', outboxId, (err as Error).message)
+      );
+    }
 
     res.status(201).json({
-      id: inserted.rows[0].id,
-      status: inserted.rows[0].status,
-      duplicateOf: null,
+      id: inserted.id,
+      status: inserted.status,
+      duplicateOf: inserted.duplicateOf ?? null,
     });
   } catch (err) {
     console.error('Error creating lead:', err);
@@ -243,10 +226,11 @@ leadsRouter.get('/:id', requireStaffOrAutomation, async (req: Request, res: Resp
 });
 
 // PATCH /leads/:id/status (staff admin only)
-leadsRouter.patch('/:id/status', requireStaff, async (req: Request, res: Response) => {
+leadsRouter.patch('/:id/status', requireAdmin, async (req: Request, res: Response) => {
   const { status } = req.body;
 
-  const allowedStatuses = ['screening_invite', 'needs_review', 'not_now', 'duplicate', 'active'];
+  // Never 'active', 'hired' or 'field_ready': applying is not a job offer (LS-002).
+  const allowedStatuses = ['screening_invite', 'needs_review', 'not_now', 'duplicate'];
   if (!status || !allowedStatuses.includes(status)) {
     res.status(422).json({
       error: `Invalid status. Allowed values: ${allowedStatuses.join(', ')}`,
@@ -279,11 +263,12 @@ leadsRouter.patch('/:id/status', requireStaff, async (req: Request, res: Respons
 
     await db.query(
       `INSERT INTO leads.lead_activity (id, lead_id, type, detail, actor)
-       VALUES ($1, $2, 'status_changed', $3, 'system')`,
+       VALUES ($1, $2, 'status_changed', $3, $4)`,
       [
         `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         req.params.id,
         JSON.stringify({ from: oldStatus, to: status }),
+        req.user?.role ?? 'unknown', // audit who changed it (LS-003)
       ]
     );
 

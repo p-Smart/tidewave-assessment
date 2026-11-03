@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lead } from '@/lib/types';
 import StatusBadge from '@/components/StatusBadge';
@@ -12,13 +12,25 @@ export default function LeadsPage() {
   const [total, setTotal] = useState(0);
   const [pageSize] = useState(20);
   const [searchQuery, setSearchQuery] = useState('');
+  // Debounced value actually sent to the server (search covers ALL leads, not just this page: OPS-002)
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setSearch(searchQuery.trim());
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let ignore = false;
     setLoading(true);
-    fetch(`/api/leads?page=${page}&pageSize=${pageSize}`)
+    const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
+    if (search) params.set('search', search);
+    fetch(`/api/leads?${params.toString()}`)
       .then((res) => {
         if (!res.ok) {
           if (res.status === 401) {
@@ -47,20 +59,10 @@ export default function LeadsPage() {
     return () => {
       ignore = true;
     };
-  }, [page, pageSize, router]);
+  }, [page, pageSize, search, router]);
 
-  // Client-side search filtering over loaded rows
-  const filteredLeads = useMemo(() => {
-    if (!searchQuery.trim()) return leads;
-    const q = searchQuery.toLowerCase();
-    return leads.filter(
-      (lead) =>
-        lead.firstName?.toLowerCase().includes(q) ||
-        lead.lastName?.toLowerCase().includes(q) ||
-        lead.email?.toLowerCase().includes(q) ||
-        lead.city?.toLowerCase().includes(q)
-    );
-  }, [leads, searchQuery]);
+  // Rows are already filtered by the leads service (server-side search).
+  const filteredLeads = leads;
 
   const totalPages = Math.ceil(total / pageSize) || 1;
 

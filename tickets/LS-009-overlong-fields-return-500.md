@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: Low  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — zod `.max()` matching the column sizes → 422. Verified: Playwright `[LS-009] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

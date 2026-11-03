@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: High  
 **Environment**: Starter build, staff token  
-**Retest Status**: Open  
+**Retest Status**: Fixed — `allowedStatuses` no longer contains `active` (422). Verified: Playwright `[LS-002] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: High  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — lead + activity + `event_outbox` row in one transaction; event sent only after commit; outbox status set to `delivered`/`failed`. (No background re-delivery worker yet — failed rows stay visible for a retry job.) Verified: unit tests `[LS-006]` + live check: outbox row `delivered`. Failed on the starter build: `evidence/playwright-strict-starter/` and `evidence/leads-unit-tests/strict-on-starter.txt`.  
 
 ---
 

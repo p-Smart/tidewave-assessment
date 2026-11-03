@@ -1,0 +1,122 @@
+# leads-service unit tests, STRICT_DEFECTS=1, against starter code at 4aa5144 (test file from the fix commit)
+
+ RUN  v2.1.8 /tmp/tw/starter-wt/leads-service
+
+ ✓ test/scoring.test.ts > Scoring Logic > calculates score correctly for high experience rep in priority city
+ ✓ test/scoring.test.ts > Scoring Logic > calculates score correctly for entry level rep in non-priority city
+ ✓ test/scoring.test.ts > Scoring Logic > calculates score correctly for intermediate rep
+ ✓ test/scoring.test.ts > Scoring Logic > floors fractional hours before calculating availability points
+ ✓ test/scoring.test.ts > Scoring Logic > assigns status for clear high score
+ ✓ test/scoring.test.ts > Scoring Logic > assigns status for clear medium score
+ ✓ test/scoring.test.ts > Scoring Logic > assigns status for clear low score
+ × test/defects.test.ts > LS-001 status boundary > [LS-001] score 70 is a screening invite (rule: >= 70)
+   → expected 'needs_review' to be 'screening_invite' // Object.is equality
+ ✓ test/defects.test.ts > LS-001 status boundary > 69 is needs_review, 50 is needs_review, 49 is not_now
+stderr | test/defects.test.ts > LS-006 lead.created event ordering > [LS-006] no lead.created event is sent when the lead could not be saved
+Error creating lead: Error: value too long for type character varying(100)
+    at /tmp/tw/starter-wt/leads-service/test/defects.test.ts:31:33
+    at mockCall (file:///home/psmart/BemaHub/tidewave-assessment/leads-service/node_modules/@vitest/spy/dist/index.js:61:17)
+    at spy (file:///home/psmart/BemaHub/tidewave-assessment/leads-service/node_modules/tinyspy/dist/index.js:45:80)
+    at Proxy.query (/tmp/tw/starter-wt/leads-service/test/defects.test.ts:4:27)
+    at /tmp/tw/starter-wt/leads-service/src/routes/leads.ts:130:31
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+stdout | test/defects.test.ts > LS-010 migrations > [LS-010] a migration that already ran is not executed again on the next start
+[Migrations] Found 3 migration file(s)
+[Migrations] Running 001_init.sql...
+[Migrations] Completed 001_init.sql
+[Migrations] Running 002_seed.sql...
+[Migrations] Completed 002_seed.sql
+[Migrations] Running 003_automation_idempotency.sql...
+[Migrations] Completed 003_automation_idempotency.sql
+[Migrations] Found 3 migration file(s)
+[Migrations] Running 001_init.sql...
+[Migrations] Completed 001_init.sql
+[Migrations] Running 002_seed.sql...
+[Migrations] Completed 002_seed.sql
+[Migrations] Running 003_automation_idempotency.sql...
+[Migrations] Completed 003_automation_idempotency.sql
+
+ × test/defects.test.ts > LS-006 lead.created event ordering > [LS-006] no lead.created event is sent when the lead could not be saved
+   → expected [ 'send lead.created', 'insert lead' ] to not include 'send lead.created'
+ × test/defects.test.ts > LS-006 lead.created event ordering > [LS-006] the event is sent only after the lead row exists
+   → expected [ 'send lead.created', 'insert lead' ] to deeply equal [ 'insert lead', 'send lead.created' ]
+ × test/defects.test.ts > LS-010 migrations > [LS-010] a migration that already ran is not executed again on the next start
+   → expected 2 to be 1 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/defects.test.ts > LS-001 status boundary > [LS-001] score 70 is a screening invite (rule: >= 70)
+AssertionError: expected 'needs_review' to be 'screening_invite' // Object.is equality
+
+Expected: "screening_invite"
+Received: "needs_review"
+
+ ❯ test/defects.test.ts:70:33
+     68| describe('LS-001 status boundary', () => {
+     69|   defect('[LS-001] score 70 is a screening invite (rule: >= 70)', () =…
+     70|     expect(determineStatus(70)).toBe('screening_invite');
+       |                                 ^
+     71|   });
+     72|   it('69 is needs_review, 50 is needs_review, 49 is not_now', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/defects.test.ts > LS-006 lead.created event ordering > [LS-006] no lead.created event is sent when the lead could not be saved
+AssertionError: expected [ 'send lead.created', 'insert lead' ] to not include 'send lead.created'
+ ❯ test/defects.test.ts:84:23
+     82|     const res = await postLead(application);
+     83|     expect(res.status).toBe(500); // the insert really failed
+     84|     expect(calls).not.toContain('send lead.created');
+       |                       ^
+     85|   });
+     86| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/defects.test.ts > LS-006 lead.created event ordering > [LS-006] the event is sent only after the lead row exists
+AssertionError: expected [ 'send lead.created', 'insert lead' ] to deeply equal [ 'insert lead', 'send lead.created' ]
+
+- Expected
++ Received
+
+  Array [
+-   "insert lead",
+    "send lead.created",
++   "insert lead",
+  ]
+
+ ❯ test/defects.test.ts:90:19
+     88|     const res = await postLead(application);
+     89|     expect(res.status).toBe(201);
+     90|     expect(calls).toEqual(['insert lead', 'send lead.created']);
+       |                   ^
+     91|   });
+     92| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/defects.test.ts > LS-010 migrations > [LS-010] a migration that already ran is not executed again on the next start
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ test/defects.test.ts:99:22
+     97|     await runMigrations(); // restart
+     98|     const seedRuns = sqlLog.filter((sql) => sql.includes('Seed data fo…
+     99|     expect(seedRuns).toBe(1);
+       |                      ^
+    100|   });
+    101| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 8 passed (12)
+   Start at  15:59:41
+   Duration  647ms (transform 168ms, setup 0ms, collect 281ms, tests 64ms, environment 0ms, prepare 164ms)
+

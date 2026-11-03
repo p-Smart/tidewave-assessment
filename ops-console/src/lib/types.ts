@@ -17,7 +17,8 @@ export interface Lead {
 export interface Activity {
   id: string;
   type: string;
-  detail: string;
+  // leads.lead_activity.detail is JSONB: the API returns an object (e.g. {score, source, status}).
+  detail: Record<string, unknown> | string | null;
   actor: string;
   createdAt: string;
 }

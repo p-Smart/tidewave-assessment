@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: Medium  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — duplicate check compares the national number (`+234…`/`+233…`/`0…` → same key) — assumes TEST_PLAN question 4 is answered "same person". Verified: Playwright `[LS-005] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

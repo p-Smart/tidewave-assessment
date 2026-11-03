@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: High  
 **Environment**: Starter build, public `POST /leads`  
-**Retest Status**: Open  
+**Retest Status**: Fixed — `scoring.ts`: `score >= 70`. Verified: Playwright `[LS-001] … @regression` + unit test `test/defects.test.ts`. Failed on the starter build: `evidence/playwright-strict-starter/` and `evidence/leads-unit-tests/strict-on-starter.txt`.  
 
 ---
 

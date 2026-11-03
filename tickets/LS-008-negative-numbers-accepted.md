@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: Low  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — `experienceYears` 0–80, `hoursPerWeek` 0–168, numeric strings coerced, non-numeric → 422. Verified: Playwright `[LS-008] … @regression`. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

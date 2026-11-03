@@ -18,27 +18,35 @@
 | [TW-008](TW-008-confirmed-total-ignores-refunds.md) | High | PR11 | Confirmed total / level ignore refunds |
 | [TW-011](TW-011-youre-in-before-confirmation.md) | High | PR14 | "You're in!" shown for processing / declined payments |
 | [TW-015](TW-015-engine-events-sent-to-n8n-test-url.md) | High | — | Engine events sent to n8n *test* URL (all 404) — fixed by config |
+| [TW-016](TW-016-same-quote-can-be-paid-twice.md) | High | — | One quote can be paid several times (server not idempotent) |
 | [TW-009](TW-009-refund-keeps-referral-credit.md) | Medium | PR11 | Refund does not cancel held referral credit |
 | [TW-010](TW-010-referral-credit-includes-fee.md) | Medium | PR10 | Referral credit includes the fee |
 | [TW-012](TW-012-receipt-shows-utc-not-lagos-time.md) | Medium | PR9 | Receipt shows UTC, not Lagos time |
 | [TW-013](TW-013-optin-consent-pre-ticked.md) | Medium | §3 | Artist-page opt-in consent is pre-ticked |
 | [TW-014](TW-014-artist-optin-tagged-with-closed-campaign.md) | Medium | §3 | Artist-page opt-ins tagged with closed campaign `coastline-ep` |
+| [TW-017](TW-017-checkout-validation-errors-say-network-problem.md) | Medium | PR6 | Every checkout validation error says "Network problem" |
 
 ## Open components
 
 | ID | Severity | Area | Title |
 |---|---|---|---|
 | [OPS-001](OPS-001-anyone-can-sign-in-as-admin.md) | Critical | Ops console | Anyone can become Admin (role from request body / plain cookie) |
-| [LS-001](LS-001-score-70-not-screening-invite.md) | High | Leads | Score exactly 70 → `needs_review` (`>` instead of `>=`) |
-| [LS-002](LS-002-status-can-be-set-to-active.md) | High | Leads | PATCH accepts forbidden status `active` |
-| [LS-003](LS-003-viewer-can-change-lead-status.md) | High | Leads | Viewer can change lead status |
-| [LS-004](LS-004-duplicate-check-case-sensitive.md) | High | Leads | Duplicate check is case-sensitive → repeat invites |
-| [LS-006](LS-006-event-sent-before-insert.md) | High | Leads | Event sent before insert, fire-and-forget, no retry |
-| [LS-005](LS-005-phone-formats-not-normalised.md) | Medium | Leads | Phone formats not normalised for duplicates |
-| [LS-007](LS-007-missing-template-variable-renders-undefined.md) | Medium | Leads | Missing template variable renders "undefined" |
-| [LS-010](LS-010-migrations-rerun-and-startup-ignores-failure.md) | Medium | Leads | Migrations re-run every boot; startup ignores failure |
-| [LS-008](LS-008-negative-numbers-accepted.md) | Low | Leads | Negative / non-numeric hours and years accepted |
-| [LS-009](LS-009-overlong-fields-return-500.md) | Low | Leads | Over-long fields return 500 instead of 422 |
+| [OPS-005](OPS-005-lead-details-page-crashes.md) | High | Ops console | Lead details page crashes for every lead — **fixed** |
+| [OPS-002](OPS-002-search-only-filters-current-page.md) | Medium | Ops console | Search only filters the 20 rows on screen — **fixed** |
+| [OPS-003](OPS-003-xof-amounts-divided-by-100.md) | Medium | Ops console | XOF amounts divided by 100 on the payments page — **fixed** |
+| [OPS-004](OPS-004-navigation-missing-after-sign-in.md) | Medium | Ops console | Navigation missing after sign-in until reload — **fixed** |
+| [LS-001](LS-001-score-70-not-screening-invite.md) | High | Leads | Score exactly 70 → `needs_review` (`>` instead of `>=`) — **fixed** |
+| [LS-002](LS-002-status-can-be-set-to-active.md) | High | Leads | PATCH accepts forbidden status `active` — **fixed** |
+| [LS-003](LS-003-viewer-can-change-lead-status.md) | High | Leads | Viewer can change lead status — **fixed** |
+| [LS-004](LS-004-duplicate-check-case-sensitive.md) | High | Leads | Duplicate check is case-sensitive → repeat invites — **fixed** |
+| [LS-006](LS-006-event-sent-before-insert.md) | High | Leads | Event sent before insert, fire-and-forget, no retry — **fixed** |
+| [LS-005](LS-005-phone-formats-not-normalised.md) | Medium | Leads | Phone formats not normalised for duplicates — **fixed** |
+| [LS-007](LS-007-missing-template-variable-renders-undefined.md) | Medium | Leads | Missing template variable renders "undefined" — **fixed** |
+| [LS-010](LS-010-migrations-rerun-and-startup-ignores-failure.md) | Medium | Leads | Migrations re-run every boot; startup ignores failure — **fixed** |
+| [LS-008](LS-008-negative-numbers-accepted.md) | Low | Leads | Negative / non-numeric hours and years accepted — **fixed** |
+| [LS-009](LS-009-overlong-fields-return-500.md) | Low | Leads | Over-long fields return 500 instead of 422 — **fixed** |
 
 ## Verified as working (no ticket)
-Price table round-up in USD/GHS/XOF; ₦1,000 instalment floor and its currency equivalents; 2.5 % fee with ₦100 floor shown separately; ledger credits exclude the fee; quote lock 30 min shown in Lagos time; FakePay signature enforced (`req_eeff14d36bfa5a07f1` → 400); out-of-order `processing` after `succeeded` does not downgrade; declined payment is not credited; referral 7-day hold and ₦2,000 cap; no referral credit for a declined payment; refunds refused for automation/anonymous/participant callers; settings API admin-only.
+Price table round-up in USD/GHS/XOF; ₦1,000 instalment floor and its currency equivalents; 2.5 % fee with ₦100 floor shown separately; ledger credits exclude the fee; quote lock 30 min shown in Lagos time; FakePay signature enforced (`req_eeff14d36bfa5a07f1` → 400); out-of-order `processing` after `succeeded` does not downgrade; declined payment is not credited; referral 7-day hold and ₦2,000 cap; no referral credit for a declined payment; refunds refused for automation/anonymous/participant callers; settings API admin-only; a browser double-click on "Pay with FakePay" sends one request; the genuine declined-card return page is correct.
+
+Automated tests for every ticket: see `playwright/README.md` (Section A) and `leads-service/test/defects.test.ts` (LS-001, LS-006, LS-010).

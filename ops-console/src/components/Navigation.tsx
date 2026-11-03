@@ -2,18 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navigation() {
   const [role, setRole] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
+  // The layout (and this nav) stays mounted across client-side navigation, so re-read the
+  // role on every route change — e.g. right after sign-in or sign-out (OPS-004).
   useEffect(() => {
-    fetch('/api/auth/me')
+    let ignore = false;
+    fetch('/api/auth/me', { cache: 'no-store' })
       .then((res) => res.json())
-      .then((data) => setRole(data.role))
-      .catch(() => setRole(null));
-  }, []);
+      .then((data) => { if (!ignore) setRole(data.role ?? null); })
+      .catch(() => { if (!ignore) setRole(null); });
+    return () => { ignore = true; };
+  }, [pathname]);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });

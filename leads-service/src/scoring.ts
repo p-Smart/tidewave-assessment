@@ -41,7 +41,7 @@ export function calculateScore(input: ScoreInput): number {
 }
 
 export function determineStatus(score: number): 'screening_invite' | 'needs_review' | 'not_now' {
-  if (score > 70) {
+  if (score >= 70) { // rule: score >= 70 -> screening_invite (LS-001)
     return 'screening_invite';
   } else if (score >= 50) {
     return 'needs_review';

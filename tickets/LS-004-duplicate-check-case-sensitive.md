@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: High  
 **Environment**: Starter build, public `POST /leads`  
-**Retest Status**: Open  
+**Retest Status**: Fixed — email trimmed + lower-cased on write; duplicate check on `lower(trim(email))` so legacy rows match. Verified: Playwright `[LS-004] … @regression`; n8n also dedups invites per address. Failed on the starter build: `evidence/playwright-strict-starter/`.  
 
 ---
 

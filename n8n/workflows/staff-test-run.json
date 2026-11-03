@@ -206,7 +206,7 @@
         "respondWith": "json",
         "responseBody": "={{ { ok: false, error: $json.reason } }}",
         "options": {
-          "responseCode": 422
+          "responseCode": "={{ $json.httpStatus }}"
         }
       },
       "name": "Respond Rejected",

@@ -43,6 +43,21 @@ jobs:
         run: |
           node tools/tw.mjs setup-check
 
+      - name: Start the ops console (needed by the "ops" Playwright project)
+        working-directory: ./ops-console
+        run: |
+          cp .env.local.example .env.local
+          npm ci
+          nohup npm run dev > ../ops-console.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:7300/login > /dev/null && break; sleep 2; done
+          curl -sf http://localhost:7300/login > /dev/null
+
+      - name: Leads service unit tests (LS-001, LS-006, LS-010 reproductions)
+        working-directory: ./leads-service
+        run: |
+          npm ci
+          npm test
+
       - name: Install Playwright test dependencies
         working-directory: ./playwright
         run: |

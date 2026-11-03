@@ -8,8 +8,9 @@ async function startServer() {
     await runMigrations();
     console.log('[Server] Migrations finished successfully.');
   } catch (err) {
-    console.error('[Server] Warning: Failed to run migrations on startup:', (err as Error).message);
-    console.log('[Server] Proceeding with server start...');
+    // Never serve traffic on a half-migrated database (LS-010).
+    console.error('[Server] Migrations failed, not starting:', (err as Error).message);
+    process.exit(1);
   }
 
   app.listen(config.port, () => {

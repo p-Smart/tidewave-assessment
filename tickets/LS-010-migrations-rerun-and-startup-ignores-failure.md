@@ -3,7 +3,7 @@
 **Area**: Leads Service  
 **Severity**: Medium  
 **Environment**: Starter build  
-**Retest Status**: Open  
+**Retest Status**: Fixed — applied files recorded in `leads.schema_migrations` and skipped (log: "3 already applied"); one transaction per file; startup exits on failure. Verified: unit test `[LS-010]` + container restart log. Failed on the starter build: `evidence/playwright-strict-starter/` and `evidence/leads-unit-tests/strict-on-starter.txt`.  
 
 ---
 
