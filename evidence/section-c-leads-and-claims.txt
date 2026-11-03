@@ -1,0 +1,37 @@
+            id            |         email          |     phone      | score |      status      | duplicate_of | experience_years | hours_per_week |          updated_at           
+--------------------------+------------------------+----------------+-------+------------------+--------------+------------------+----------------+-------------------------------
+ lead_1793713610462_1lz5o | ngozi.eze@mail.test    | +2348090000101 |   100 | screening_invite |              |                3 |             25 | 2026-11-03 13:46:50.509423+00
+ lead_1793715040387_l4sjg | bola.seventy@mail.test | +2348000000701 |    70 | needs_review     |              |                3 |              5 | 2026-11-03 14:10:40.389555+00
+ lead_1793715040426_djaaj | ngozi.other@mail.test  | 08090000101    |   100 | screening_invite |              |                3 |             25 | 2026-11-03 14:10:40.428571+00
+ lead_1793715040448_9jp3z | neg.values@mail.test   | +2348000000777 |    30 | not_now          |              |               -5 |            -40 | 2026-11-03 14:10:40.450338+00
+ lead_1793715056565_jxwvq | NGOZI.Eze@Mail.test    | +2348090000998 |   100 | screening_invite |              |                3 |             25 | 2026-11-03 14:10:56.566773+00
+ lead_seed_10             | folake.coker@mail.test | +2348094440010 |    10 | active           |              |                0 |              5 | 2026-11-03 14:10:40.481711+00
+(6 rows)
+
+                   dedup_key                   | status | attempts |        event_id         |     workflow     |          created_at           
+-----------------------------------------------+--------+----------+-------------------------+------------------+-------------------------------
+ solace-confirmed:pay_92837d48a0f454a12e       | sent   |        1 | evt_test_ok1            | solace-events    | 2026-11-03 13:43:45.854027+00
+ solace-confirmed:pay_f9dd800e205fb74384       | sent   |        1 | evt_test_par4           | solace-events    | 2026-11-03 13:43:53.302037+00
+ solace-confirmed:pay_1c7eeb47489a673db9       | sent   |        1 | evt_test_chaos503       | solace-events    | 2026-11-03 13:44:01.856292+00
+ solace-confirmed:pay_effdf1bcb40a1cc220       | sent   |        1 | evt_test_outage         | solace-events    | 2026-11-03 13:44:21.605194+00
+ staff-test-run:req_attempt_0001               | sent   |        1 | req_attempt_0001        | staff-test-run   | 2026-11-03 13:44:36.598274+00
+ staff-test-run:req_mailchaos_01               | sent   |        2 | req_mailchaos_01        | staff-test-run   | 2026-11-03 13:44:45.248654+00
+ staff-test-run:req_mailchaos_51               | failed |        1 | req_mailchaos_51        | staff-test-run   | 2026-11-03 13:44:50.020983+00
+ staff-test-run:req_mailchaos_52               | failed |        1 | req_mailchaos_52        | staff-test-run   | 2026-11-03 13:44:54.409299+00
+ staff-test-run:req_mailchaos_53               | failed |        1 | req_mailchaos_53        | staff-test-run   | 2026-11-03 13:44:58.699896+00
+ staff-test-run:req_mailchaos_54               | sent   |        1 | req_mailchaos_54        | staff-test-run   | 2026-11-03 13:45:03.055983+00
+ staff-test-run:req_concurrent_01              | sent   |        1 | req_concurrent_01       | staff-test-run   | 2026-11-03 13:46:39.770776+00
+ street-team-prospect:lead_1793713610462_1lz5o | sent   |        1 | evt_1793713610462_k21kj | street-team-lead | 2026-11-03 13:46:50.756781+00
+ solace-intro:probe.optin@example.test         | sent   |        1 | evt_81a714b6b46600bd3e  | solace-events    | 2026-11-03 13:47:05.511524+00
+ solace-confirmed:pay_03ba88bc6984239bfa       | sent   |        1 | evt_c2b717d70acd2404c1  | solace-events    | 2026-11-03 14:05:26.848673+00
+ solace-confirmed:pay_02aa4592c5c5000041       | sent   |        1 | evt_1f212b68d780baafb8  | solace-events    | 2026-11-03 14:07:41.791781+00
+ solace-confirmed:pay_0ab60cd71da03d2c71       | sent   |        1 | evt_d50906cca1abb84b96  | solace-events    | 2026-11-03 14:09:41.831357+00
+ solace-confirmed:pay_ee5e6b997db571178d       | sent   |        1 | evt_f5789f050f4a892539  | solace-events    | 2026-11-03 14:09:59.793681+00
+ street-team-prospect:lead_1793715040426_djaaj | sent   |        1 | evt_1793715040426_mlczj | street-team-lead | 2026-11-03 14:10:41.006087+00
+ street-team-prospect:lead_1793715056565_jxwvq | sent   |        1 | evt_1793715056565_8tcp4 | street-team-lead | 2026-11-03 14:10:56.756023+00
+ street-team-prospect:lead_1793715085392_2rpnj | sent   |        1 | evt_1793715085392_tosdt | street-team-lead | 2026-11-03 14:11:25.572567+00
+ street-team-prospect:ngozi.eze@mail.test      | sent   |        1 | evt_1793713610462_k21kj | street-team-lead | 2026-11-03 14:11:47.225805+00
+ street-team-prospect:ngozi.other@mail.test    | sent   |        1 | evt_1793715040426_mlczj | street-team-lead | 2026-11-03 14:11:47.225805+00
+ street-team-prospect:lead_1793715137489_qfao5 | sent   |        1 | evt_1793715137489_n2qb9 | street-team-lead | 2026-11-03 14:12:17.9207+00
+(23 rows)
+

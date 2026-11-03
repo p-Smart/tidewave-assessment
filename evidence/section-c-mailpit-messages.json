@@ -1,0 +1,461 @@
+{
+  "total": 18,
+  "unread": 8,
+  "count": 18,
+  "messages_count": 18,
+  "messages_unread": 8,
+  "start": 0,
+  "tags": [],
+  "messages": [
+    {
+      "ID": "1fZwwlbo0afdQqo7skkkiD",
+      "MessageID": "26a50770-ed2a-2cc8-a297-4260e6d0894c@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ngozi.eze@mail.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T14:12:18.254Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1617,
+      "Attachments": 0,
+      "Snippet": "Hello Ngozi, Thank you for submitting your application to the Tidewave Street Team. The next step is a short screening call with our team. Please choose a time that suits you using the button below. C..."
+    },
+    {
+      "ID": "1IC9ApUeBsjIIPwQer5iz4",
+      "MessageID": "ea1ad793-97c0-5a18-501a-17dba27fc84b@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ngozi.eze@mail.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T14:11:25.685Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1617,
+      "Attachments": 0,
+      "Snippet": "Hello Ngozi, Thank you for submitting your application to the Tidewave Street Team. The next step is a short screening call with our team. Please choose a time that suits you using the button below. C..."
+    },
+    {
+      "ID": "43nwsostogUGwPt4u110Ne",
+      "MessageID": "47bdf173-ce09-71c7-9fb4-56aa8f21d8df@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ngozi.eze@mail.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T14:10:56.889Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1617,
+      "Attachments": 0,
+      "Snippet": "Hello Ngozi, Thank you for submitting your application to the Tidewave Street Team. The next step is a short screening call with our team. Please choose a time that suits you using the button below. C..."
+    },
+    {
+      "ID": "4zOFe0XK1x73UtYqAXrrSw",
+      "MessageID": "937d797e-51f6-946b-20c4-5a0003b016d0@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ngozi.other@mail.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T14:10:41.556Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1621,
+      "Attachments": 0,
+      "Snippet": "Hello Ngozi, Thank you for submitting your application to the Tidewave Street Team. The next step is a short screening call with our team. Please choose a time that suits you using the button below. C..."
+    },
+    {
+      "ID": "2xwOaMef3oB7bexVU5PRX6",
+      "MessageID": "4bd15693-ca68-03ce-2e9f-315d07b11deb@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "chidi.okoro@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T14:09:59.9Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1418,
+      "Attachments": 0,
+      "Snippet": "Thanks Chidi, We received your backing of ₦10,000.00. Your current backing level is now Supporter. View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "5N9Tt8IoH9mhitvnp12HNw",
+      "MessageID": "df7b5e2d-9bff-4a76-8930-25fb21e8dbe1@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "chidi.okoro@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T14:09:41.947Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1400,
+      "Attachments": 0,
+      "Snippet": "Thanks Chidi, We received your backing of ₦10,000.00. Your current backing level is now . View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "6xcypcGYqnUrpKvhIhhh7S",
+      "MessageID": "19042fe8-eda2-1e58-2a8b-c04238d1df6b@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "kofi.mensah@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T14:07:41.891Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1414,
+      "Attachments": 0,
+      "Snippet": "Thanks Kofi, We received your backing of GH₵100.00. Your current backing level is now Supporter. View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "5Yc8U9v9IvOtGqHuggANQ4",
+      "MessageID": "15dec03a-2127-e794-0f85-3a5bbbaa8673@tidewave.test",
+      "Read": false,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ada.obi@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T14:05:26.957Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1402,
+      "Attachments": 0,
+      "Snippet": "Thanks Ada, We received your backing of ₦2,000.00. Your current backing level is now Listener. View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "5GEKpgf6zxM41CEVSIhRQS",
+      "MessageID": "31cc77a3-3ec6-b03c-f66c-e3a33ea98065@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "probe.optin@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Welcome to Solace Avenue",
+      "Created": "2026-11-03T13:47:05.623Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1443,
+      "Attachments": 0,
+      "Snippet": "Hi Probe, You asked to hear more about Solace Avenue and the new project. Check out our latest campaign details below. Click here Best, Tidewave Music"
+    },
+    {
+      "ID": "1iFQ988QQ6RWyaltjwDh6A",
+      "MessageID": "83e3cea8-e650-222c-4f7b-5fc5706e947a@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "ngozi.eze@mail.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T13:46:50.965Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1617,
+      "Attachments": 0,
+      "Snippet": "Hello Ngozi, Thank you for submitting your application to the Tidewave Street Team. The next step is a short screening call with our team. Please choose a time that suits you using the button below. C..."
+    },
+    {
+      "ID": "0wFKTGYWFqRfkU5YV5E87J",
+      "MessageID": "ade9b3b5-2614-3776-3239-75b159c30d28@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "staff-test@tidewave.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "[TEST] Tidewave Street Team - Next Steps",
+      "Created": "2026-11-03T13:46:40.129Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1419,
+      "Attachments": 0,
+      "Snippet": "Hello Kemi, Thank you for submitting your application to the Tidewave Street Team. Book a call. Click here Thanks, Tidewave Team"
+    },
+    {
+      "ID": "3ferEXWF04rq6k8WyZLzrf",
+      "MessageID": "bcf00ff3-c930-3488-6faa-1bd482e7a5c6@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "staff-test@tidewave.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "[TEST] Welcome to Solace Avenue",
+      "Created": "2026-11-03T13:45:07.218Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1440,
+      "Attachments": 0,
+      "Snippet": "Hi Ada, You asked to hear more about Solace Avenue and the new project. Check out our latest campaign details below. Click here Best, Tidewave Music"
+    },
+    {
+      "ID": "6bdrXBqugE3fWblehqrsRL",
+      "MessageID": "17e9d036-48ec-3c30-f088-fb205c0b4135@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "staff-test@tidewave.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "[TEST] Welcome to Solace Avenue",
+      "Created": "2026-11-03T13:44:49.795Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1440,
+      "Attachments": 0,
+      "Snippet": "Hi Ada, You asked to hear more about Solace Avenue and the new project. Check out our latest campaign details below. Click here Best, Tidewave Music"
+    },
+    {
+      "ID": "39iOCrlOc1lNva4DRdeqKm",
+      "MessageID": "ce192aee-2d4f-df65-4663-f1c69da09bcf@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "staff-test@tidewave.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "[TEST] Welcome to Solace Avenue",
+      "Created": "2026-11-03T13:44:36.708Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1478,
+      "Attachments": 0,
+      "Snippet": "Hi Ada \"Q\" O, You asked to hear more about Solace Avenue and the new project. Check out our latest campaign details below. Click here Best, Tidewave Music"
+    },
+    {
+      "ID": "0JnQkqXfftvYcM450oAypN",
+      "MessageID": "dd2d13a0-6067-2d15-867d-3590d6a98381@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "bayo.adeleke@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T13:44:21.7Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1414,
+      "Attachments": 0,
+      "Snippet": "Thanks Bayo, We received your backing of ₦6,000.00. Your current backing level is now Listener. View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "3p5CePtObTnDDaMMNYCmJm",
+      "MessageID": "2acef281-6c39-2957-a0dc-8125a18990ec@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "awa.diallo@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T13:44:02.012Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1357,
+      "Attachments": 0,
+      "Snippet": "Thanks Awa, We received your backing of CFA 6,500. Your current backing level is now . View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "4qyM07k56JHd4WUH6lpEph",
+      "MessageID": "7150fd7b-96c9-126d-bf12-6b5741ed9581@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "tunde.bakare@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T13:43:53.598Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1420,
+      "Attachments": 0,
+      "Snippet": "Thanks Tunde, We received your backing of ₦10,000.00. Your current backing level is now Supporter. View account Cheers, Tidewave Music"
+    },
+    {
+      "ID": "72ycCVbQS9URrxHTTo1a2u",
+      "MessageID": "83789e6e-d8ab-5cf4-37e4-46862757ed1f@tidewave.test",
+      "Read": true,
+      "From": {
+        "Name": "Tidewave Music",
+        "Address": "hello@tidewave.test"
+      },
+      "To": [
+        {
+          "Name": "",
+          "Address": "lola.peters@example.test"
+        }
+      ],
+      "Cc": null,
+      "Bcc": null,
+      "ReplyTo": [],
+      "Subject": "Your Solace Avenue Backing is Confirmed",
+      "Created": "2026-11-03T13:43:46.034Z",
+      "Username": "",
+      "Tags": [],
+      "Size": 1416,
+      "Attachments": 0,
+      "Snippet": "Thanks Lola, We received your backing of ₦10,000.00. Your current backing level is now Supporter. View account Cheers, Tidewave Music"
+    }
+  ]
+}

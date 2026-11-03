@@ -1,0 +1,2369 @@
+{
+  "payload": {
+    "environment": "seed_ffa76661",
+    "events": [
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T13:47:08",
+        "id": "evt_81a714b6b46600bd3e",
+        "lastStatus": "200",
+        "type": "optin.created"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:05:27",
+        "id": "evt_c2b717d70acd2404c1",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 5,
+        "deliveredAt": "",
+        "id": "evt_2fe04468a492087586",
+        "lastStatus": "503",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:06:11",
+        "id": "evt_a8e2e2f1bdac93431e",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:06:14",
+        "id": "evt_2cdcabfbb16b50dd16",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 5,
+        "deliveredAt": "",
+        "id": "evt_29898aaee91d49ee36",
+        "lastStatus": "503",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:07:05",
+        "id": "evt_617f71aca3fcfec040",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:07:41",
+        "id": "evt_1f212b68d780baafb8",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:07:42",
+        "id": "evt_9ff0ff24b891e1418c",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:07:59",
+        "id": "evt_d0f263856ca87534a9",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:08:35",
+        "id": "evt_f46df088648c79063d",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:08:36",
+        "id": "evt_97fafe2c714d9cc6e4",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:09:42",
+        "id": "evt_d50906cca1abb84b96",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:09:44",
+        "id": "evt_cc9724433e2f4e2eac",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:09:59",
+        "id": "evt_f5789f050f4a892539",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:10:00",
+        "id": "evt_0d1135b753e49c1452",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:10:02",
+        "id": "evt_8572a23f195bb74de5",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      },
+      {
+        "attempts": 1,
+        "deliveredAt": "2026-11-03T14:10:20",
+        "id": "evt_eca0b88c9b080b8c37",
+        "lastStatus": "200",
+        "type": "payment.updated"
+      }
+    ],
+    "generatedAt": "2026-11-03T14:19:19Z",
+    "requests": [
+      {
+        "ts": "2026-11-03T13:29:20.74254Z",
+        "server": "engine",
+        "requestId": "req_b18b1fd4b1c1e7573b",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:29:20.761826Z",
+        "server": "fakepay",
+        "requestId": "req_601a4d38bba47ef17b",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:29:21.665839Z",
+        "server": "engine",
+        "requestId": "req_f5de6c8995b566e017",
+        "method": "GET",
+        "path": "/api/staff/payments",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:30:44.450664Z",
+        "server": "engine",
+        "requestId": "req_3da8715507edd59bda",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:30:44.466584Z",
+        "server": "fakepay",
+        "requestId": "req_aef772a29f61f58b72",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:30:44.733612Z",
+        "server": "engine",
+        "requestId": "req_1471d2a256e59219ba",
+        "method": "GET",
+        "path": "/api/staff/payments",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:34:25.433576Z",
+        "server": "engine",
+        "requestId": "req_8e39e28d91c87a6075",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:34:25.449544Z",
+        "server": "fakepay",
+        "requestId": "req_4a65cb8b11da919d25",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:34:25.570155Z",
+        "server": "engine",
+        "requestId": "req_d539f3ddb072c6db24",
+        "method": "GET",
+        "path": "/api/staff/payments",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:35:06.325963Z",
+        "server": "engine",
+        "requestId": "req_1b72562d4eb86b86d6",
+        "method": "GET",
+        "path": "/api/docs",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:06.336657Z",
+        "server": "engine",
+        "requestId": "req_df9bc18ee9f797bb88",
+        "method": "GET",
+        "path": "/api/docs",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:06.352871Z",
+        "server": "engine",
+        "requestId": "req_edf9b613020a7693ae",
+        "method": "GET",
+        "path": "/api/docs/openapi.json",
+        "status": 404,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:14.126432Z",
+        "server": "engine",
+        "requestId": "req_bc5a70862295c49416",
+        "method": "GET",
+        "path": "/api/staff/settings",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:35:14.137334Z",
+        "server": "engine",
+        "requestId": "req_b3f8029b7f67c2d9c6",
+        "method": "GET",
+        "path": "/api/staff/activity",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:35:14.148151Z",
+        "server": "engine",
+        "requestId": "req_9206944959d3c7b4c3",
+        "method": "GET",
+        "path": "/api/staff/payments",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:35:14.161865Z",
+        "server": "engine",
+        "requestId": "req_dc568e19f0fb6e8a33",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.404669Z",
+        "server": "engine",
+        "requestId": "req_a7d501271e90555570",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.897418Z",
+        "server": "engine",
+        "requestId": "req_6decd3238c24fe92a2",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.913005Z",
+        "server": "engine",
+        "requestId": "req_cc8b99c5d7817f8451",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_658c551b419ae2a373",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.925215Z",
+        "server": "engine",
+        "requestId": "req_d859660c505d5569c5",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_nope",
+        "status": 404,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.936075Z",
+        "server": "engine",
+        "requestId": "req_8324be1789d993b78e",
+        "method": "GET",
+        "path": "/api/automation/participants/par_ada_616461",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.950191Z",
+        "server": "engine",
+        "requestId": "req_a99d92b2fa2a2833f6",
+        "method": "GET",
+        "path": "/api/automation/participants/par_nope",
+        "status": 404,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:35:20.961228Z",
+        "server": "engine",
+        "requestId": "req_486e3bec98e52281ac",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 401,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:29.706268Z",
+        "server": "engine",
+        "requestId": "req_f07347d9d3a565fc81",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:29.822791Z",
+        "server": "engine",
+        "requestId": "req_aa3a4bc8d9e9f2a4ba",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:32.875186Z",
+        "server": "engine",
+        "requestId": "req_0001c77a0646e1e5f2",
+        "method": "GET",
+        "path": "/artist/solace-avenue",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:35.097181Z",
+        "server": "engine",
+        "requestId": "req_43bbf8a15527058f04",
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:40.963993Z",
+        "server": "engine",
+        "requestId": "req_082ee6618c1d0e8610",
+        "method": "POST",
+        "path": "/optin",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:42.992549Z",
+        "server": "engine",
+        "requestId": "req_ed457beaf5e8884358",
+        "method": "GET",
+        "path": "/__tools/evidence",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T13:35:54.385622Z",
+        "server": "fakepay",
+        "requestId": "req_56894fe3077a381dd5",
+        "method": "GET",
+        "path": "/",
+        "status": 302,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:35:54.400231Z",
+        "server": "fakepay",
+        "requestId": "req_3a14339ed0226f3545",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:39:56.321849Z",
+        "server": "engine",
+        "requestId": "req_3ad8143a9a7c0be987",
+        "method": "GET",
+        "path": "/street-team/screening",
+        "status": 404,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:39:56.372942Z",
+        "server": "engine",
+        "requestId": "req_7c83008f73f268e8f2",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:39:56.412745Z",
+        "server": "engine",
+        "requestId": "req_b6c4fb9c8f3da74c43",
+        "method": "GET",
+        "path": "/campaigns/coastline-ep",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:40:08.878867Z",
+        "server": "engine",
+        "requestId": "req_c4f0cb1f7aefdd07b6",
+        "method": "GET",
+        "path": "/street-team",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T13:43:37.677583Z",
+        "server": "engine",
+        "requestId": "req_b9c27e9850d6db476c",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_658c551b419ae2a373",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:45.749504Z",
+        "server": "engine",
+        "requestId": "req_221cfa9ae67cfc180d",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:46.117896Z",
+        "server": "engine",
+        "requestId": "req_5f171e3f907b7a104f",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:46.333559Z",
+        "server": "engine",
+        "requestId": "req_4237eef7fbcb403c44",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:46.593844Z",
+        "server": "engine",
+        "requestId": "req_4f7537e6e43e1d419f",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.05254Z",
+        "server": "engine",
+        "requestId": "req_dd482e761e8596e198",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_f9dd800e205fb74384",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.266346Z",
+        "server": "engine",
+        "requestId": "req_0f0a3b79af7e9e78ed",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_f9dd800e205fb74384",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.290235Z",
+        "server": "engine",
+        "requestId": "req_1945ea8fb89f627cfd",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_f9dd800e205fb74384",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.329069Z",
+        "server": "engine",
+        "requestId": "req_aec2cdcd6c6a63a74e",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_f9dd800e205fb74384",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.35211Z",
+        "server": "engine",
+        "requestId": "req_3ecafa62f49b9ebd33",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_f9dd800e205fb74384",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:53.722341Z",
+        "server": "engine",
+        "requestId": "req_0cbed340c053f80433",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:43:58.474438Z",
+        "server": "engine",
+        "requestId": "req_c57be65a85aa8fd823",
+        "method": "POST",
+        "path": "/__tools/chaos",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T13:43:58.651764Z",
+        "server": "engine",
+        "requestId": "req_b4c70e8cdd229b03b2",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_1c7eeb47489a673db9",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:00.206184Z",
+        "server": "engine",
+        "requestId": "req_4bebbb3da6ac34a88b",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_1c7eeb47489a673db9",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:01.75601Z",
+        "server": "engine",
+        "requestId": "req_1d3a35f2ef8df15733",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_1c7eeb47489a673db9",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:02.049431Z",
+        "server": "engine",
+        "requestId": "req_25eaf3dc76a4ff816a",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:09.961538Z",
+        "server": "engine",
+        "requestId": "req_6cba584c4bae379873",
+        "method": "POST",
+        "path": "/__tools/chaos",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T13:44:10.140406Z",
+        "server": "engine",
+        "requestId": "req_bb9a72efb363010765",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:11.662102Z",
+        "server": "engine",
+        "requestId": "req_048e1e9d7cff695513",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:13.18116Z",
+        "server": "engine",
+        "requestId": "req_c3cd6aa412af4f37e6",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:13.40976Z",
+        "server": "engine",
+        "requestId": "req_bbe03fd1a73dba3190",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:14.925279Z",
+        "server": "engine",
+        "requestId": "req_375b64c4a2cf46381a",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:16.46813Z",
+        "server": "engine",
+        "requestId": "req_850b43c78ffef8c500",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:16.681847Z",
+        "server": "engine",
+        "requestId": "req_37cb720bc3a4831ee8",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:18.224453Z",
+        "server": "engine",
+        "requestId": "req_383d8e953ffe30040a",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:19.775716Z",
+        "server": "engine",
+        "requestId": "req_8b852c8feff6e68fa2",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:20.001779Z",
+        "server": "engine",
+        "requestId": "req_70ee2b6aadd5f5a17b",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 503,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:21.538795Z",
+        "server": "engine",
+        "requestId": "req_3407b1074e06835dca",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_effdf1bcb40a1cc220",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:21.763014Z",
+        "server": "engine",
+        "requestId": "req_9b0d9b1ea66140e540",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:44:27.335105Z",
+        "server": "engine",
+        "requestId": "req_7f92e26af345636681",
+        "method": "GET",
+        "path": "/api/staff/payments",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T13:44:36.034919Z",
+        "server": "engine",
+        "requestId": "req_5dcf40c7268b6a581a",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c84d10b81c37e1cf75",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:46:38.965026Z",
+        "server": "engine",
+        "requestId": "req_4c0829bbef8db24767",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_92837d48a0f454a12e",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:47:05.181976Z",
+        "server": "engine",
+        "requestId": "req_30756d39b25603c931",
+        "method": "PUT",
+        "path": "/api/staff/settings",
+        "status": 200,
+        "actor": "staff.admin"
+      },
+      {
+        "ts": "2026-11-03T13:47:05.291791Z",
+        "server": "engine",
+        "requestId": "req_109e7860d3d1d91df4",
+        "method": "POST",
+        "path": "/__tools/redeliver",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T13:47:05.71365Z",
+        "server": "engine",
+        "requestId": "req_2f372f07036ead79d4",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T13:47:08.402499Z",
+        "server": "engine",
+        "requestId": "req_760802da3c9afa8b86",
+        "method": "POST",
+        "path": "/__tools/redeliver",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T14:04:22.038453Z",
+        "server": "engine",
+        "requestId": "req_2d80ab6822a4ae614c",
+        "method": "POST",
+        "path": "/login",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:04:22.052164Z",
+        "server": "engine",
+        "requestId": "req_26b92632306b6dc8da",
+        "method": "GET",
+        "path": "/login",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:04:22.090691Z",
+        "server": "engine",
+        "requestId": "req_015c8ad03cf24b985b",
+        "method": "GET",
+        "path": "/me",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:26.073779Z",
+        "server": "engine",
+        "requestId": "req_6a822212ff9f7b6613",
+        "method": "GET",
+        "path": "/me",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:26.092568Z",
+        "server": "engine",
+        "requestId": "req_08dda08bae32991fae",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:31.805306Z",
+        "server": "engine",
+        "requestId": "req_cf81e53a4a20bf6a66",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions?currency=NGN",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:31.825238Z",
+        "server": "engine",
+        "requestId": "req_e49cd862b95430c542",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions?currency=USD",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:31.839525Z",
+        "server": "engine",
+        "requestId": "req_8d834a53ec6db0b1b5",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions?currency=GHS",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:31.854137Z",
+        "server": "engine",
+        "requestId": "req_aa735a153119ce3fec",
+        "method": "GET",
+        "path": "/campaigns/harmattan-sessions?currency=XOF",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:40.810584Z",
+        "server": "engine",
+        "requestId": "req_656832a1ad2c42a83c",
+        "method": "GET",
+        "path": "/checkout?campaign=harmattan-sessions",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:41.026512Z",
+        "server": "engine",
+        "requestId": "req_52988e090e062a4250",
+        "method": "GET",
+        "path": "/checkout?campaign=harmattan-sessions",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:41.041322Z",
+        "server": "engine",
+        "requestId": "req_fe6f0ec8f0de50aeb5",
+        "method": "GET",
+        "path": "/checkout?campaign=harmattan-sessions",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:53.872269Z",
+        "server": "engine",
+        "requestId": "req_236a235db0a2fcf543",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:53.89876Z",
+        "server": "engine",
+        "requestId": "req_5b0abc797a5545ce0b",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:53.925239Z",
+        "server": "engine",
+        "requestId": "req_4243311ba082919ce3",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:04:53.951728Z",
+        "server": "engine",
+        "requestId": "req_c658a80e87696935e6",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.397294Z",
+        "server": "engine",
+        "requestId": "req_e6c8fec7417e47397c",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.505351Z",
+        "server": "engine",
+        "requestId": "req_25f3b8096fb63704cf",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.61058Z",
+        "server": "engine",
+        "requestId": "req_2627a20b87bcf24043",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.712338Z",
+        "server": "engine",
+        "requestId": "req_fcf47fc8e566b7cb15",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.811494Z",
+        "server": "engine",
+        "requestId": "req_97eb46f7c1eefe0b07",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:07.906545Z",
+        "server": "engine",
+        "requestId": "req_a6c0815a8661063d18",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.005127Z",
+        "server": "engine",
+        "requestId": "req_58b9d5e219fcd21771",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.102317Z",
+        "server": "engine",
+        "requestId": "req_c64272874057cb67f3",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.198442Z",
+        "server": "engine",
+        "requestId": "req_e225a835d8a6a333fb",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.2943Z",
+        "server": "engine",
+        "requestId": "req_7bcd3c444c1e3ae2f4",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.394557Z",
+        "server": "engine",
+        "requestId": "req_b47afa2ddb7df837a0",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.490201Z",
+        "server": "engine",
+        "requestId": "req_a4e79da5ee8f09015a",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:08.601753Z",
+        "server": "engine",
+        "requestId": "req_1fe568d744916ac407",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:16.225539Z",
+        "server": "engine",
+        "requestId": "req_dd936322873d7369ba",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:20.229487Z",
+        "server": "engine",
+        "requestId": "req_1ffb26bffcf207063e",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:20.261803Z",
+        "server": "fakepay",
+        "requestId": "req_ff1316b42198b17f7d",
+        "method": "GET",
+        "path": "/pay/fp_5670c7a495dea2d284",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:05:24.679113Z",
+        "server": "fakepay",
+        "requestId": "req_81412fc0079b12c263",
+        "method": "POST",
+        "path": "/pay/fp_5670c7a495dea2d284",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:05:24.703255Z",
+        "server": "engine",
+        "requestId": "req_de446fe8b38450e0c7",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_03ba88bc6984239bfa&status=success",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:25.383013Z",
+        "server": "engine",
+        "requestId": "req_7c506a11a7d613594b",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:05:26.088486Z",
+        "server": "engine",
+        "requestId": "req_8bb82c3087e7b157f5",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:05:26.721642Z",
+        "server": "fakepay",
+        "requestId": "req_02b76e161818e5cd2f",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:05:26.773607Z",
+        "server": "engine",
+        "requestId": "req_569cf6004d2ed831ee",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_03ba88bc6984239bfa",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:05:26.995585Z",
+        "server": "engine",
+        "requestId": "req_e3c591bd9e307be303",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.186834Z",
+        "server": "engine",
+        "requestId": "req_fb8f8e5cdfb3359dac",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.204377Z",
+        "server": "engine",
+        "requestId": "req_7a4aaee5855bce9392",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.223405Z",
+        "server": "fakepay",
+        "requestId": "req_c01be179d2adaadea0",
+        "method": "POST",
+        "path": "/pay/fp_4de3440af9bb1829f8",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.244048Z",
+        "server": "engine",
+        "requestId": "req_345b71dbb79a3c2cd9",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_be074f3bb37f4eae9d&status=processing",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.354372Z",
+        "server": "engine",
+        "requestId": "req_1c9f985caad549c6d0",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_be074f3bb37f4eae9d&status=success",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.44633Z",
+        "server": "engine",
+        "requestId": "req_47f36be41f839681bf",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:05:39.932965Z",
+        "server": "engine",
+        "requestId": "req_6e5e8adec4c6ce1043",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:05:41.762191Z",
+        "server": "engine",
+        "requestId": "req_4f29614a324893fd87",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:05:47.761671Z",
+        "server": "engine",
+        "requestId": "req_a8a35464b20d7cc469",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:05:49.517323Z",
+        "server": "engine",
+        "requestId": "req_6bf2a4f6f606325dd2",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:05:49.542641Z",
+        "server": "engine",
+        "requestId": "req_050233dd82a0da3b84",
+        "method": "GET",
+        "path": "/me",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:09.042897Z",
+        "server": "engine",
+        "requestId": "req_4b2606e73da22d250b",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:09.062553Z",
+        "server": "engine",
+        "requestId": "req_6639110e1031ac914b",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:09.082218Z",
+        "server": "fakepay",
+        "requestId": "req_bbc0f60748d570508c",
+        "method": "POST",
+        "path": "/pay/fp_da16e2ca956f0311e7",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:06:09.788469Z",
+        "server": "engine",
+        "requestId": "req_cb872fde02d221c312",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:06:11.761688Z",
+        "server": "engine",
+        "requestId": "req_56850e6c30bbee78bd",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_323ffde1bd484499ce",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:12.37215Z",
+        "server": "engine",
+        "requestId": "req_b4c02d4c24fbb03a40",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_323ffde1bd484499ce&status=success",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:12.760322Z",
+        "server": "engine",
+        "requestId": "req_050d536c2f5fc44bd0",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_323ffde1bd484499ce",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:12.772395Z",
+        "server": "engine",
+        "requestId": "req_b5f0bf5981c63232c8",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:12.789237Z",
+        "server": "engine",
+        "requestId": "req_0af8abe61d28af0a29",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:12.804884Z",
+        "server": "fakepay",
+        "requestId": "req_c9543c2b040a0a958f",
+        "method": "POST",
+        "path": "/pay/fp_05c541a847d8326c18",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:06:13.526039Z",
+        "server": "engine",
+        "requestId": "req_f3b0e04f31dd9cadd4",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:06:14.712724Z",
+        "server": "engine",
+        "requestId": "req_df2745472b64caba37",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:16.083333Z",
+        "server": "engine",
+        "requestId": "req_63e9db011c5f8c19ca",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_c1ae199d2053baed83&status=processing",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:20.750485Z",
+        "server": "engine",
+        "requestId": "req_f4d693ce1ba730e796",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:27.959529Z",
+        "server": "engine",
+        "requestId": "req_139e02b470068b3d68",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:06:27.984439Z",
+        "server": "engine",
+        "requestId": "req_d800efd0d34dd1349c",
+        "method": "GET",
+        "path": "/checkout/return?payment=pay_c1ae199d2053baed83&status=success",
+        "status": 200,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:06:28.256776Z",
+        "server": "engine",
+        "requestId": "req_39672d4625e64009f4",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:06:28.277455Z",
+        "server": "fakepay",
+        "requestId": "req_a846cf91fc88ef607b",
+        "method": "GET",
+        "path": "/v1/payments/fp_05c541a847d8326c18",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:06:28.286618Z",
+        "server": "engine",
+        "requestId": "req_156ec1745cff5e3a5b",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:29.745667Z",
+        "server": "engine",
+        "requestId": "req_383561d51b73aa5255",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:35.737592Z",
+        "server": "engine",
+        "requestId": "req_6f7134fa019a001779",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:06:43.455491Z",
+        "server": "engine",
+        "requestId": "req_3e47bf20a4c8ee7f85",
+        "method": "POST",
+        "path": "/login",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:06:43.469639Z",
+        "server": "engine",
+        "requestId": "req_a8bb1b46b97f80b798",
+        "method": "GET",
+        "path": "/me/contributions",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:43.481597Z",
+        "server": "engine",
+        "requestId": "req_94016d26118fb592df",
+        "method": "GET",
+        "path": "/me/contributions",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:48.608879Z",
+        "server": "engine",
+        "requestId": "req_78b81054d58f14a2a6",
+        "method": "GET",
+        "path": "/me/receipts/1003",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:55.926264Z",
+        "server": "engine",
+        "requestId": "req_f836d0433329043e17",
+        "method": "GET",
+        "path": "/me/receipts/1001",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:55.949068Z",
+        "server": "engine",
+        "requestId": "req_d2781bb7e6010b0d63",
+        "method": "GET",
+        "path": "/me/receipts/1002",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:55.968377Z",
+        "server": "engine",
+        "requestId": "req_5f06d5fbb55db60786",
+        "method": "GET",
+        "path": "/me/receipts/1003",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:55.986472Z",
+        "server": "engine",
+        "requestId": "req_94d94bbe9d51919f70",
+        "method": "GET",
+        "path": "/me/receipts/1005",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:56.006548Z",
+        "server": "engine",
+        "requestId": "req_bf325c199c8146faac",
+        "method": "GET",
+        "path": "/me/receipts/1006",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:56.024566Z",
+        "server": "engine",
+        "requestId": "req_c91509b91d32fb9523",
+        "method": "GET",
+        "path": "/me/receipts/1007",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:56.041458Z",
+        "server": "engine",
+        "requestId": "req_4f5898626ead171761",
+        "method": "GET",
+        "path": "/me/receipts/1010",
+        "status": 200,
+        "actor": "participant:tunde"
+      },
+      {
+        "ts": "2026-11-03T14:06:56.056969Z",
+        "server": "engine",
+        "requestId": "req_767a11995d8a513738",
+        "method": "GET",
+        "path": "/me/receipts/1003",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:04.578445Z",
+        "server": "engine",
+        "requestId": "req_b8d6992405ed14b3e9",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:04.589797Z",
+        "server": "engine",
+        "requestId": "req_b86d37e24817276158",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 403,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:04.601178Z",
+        "server": "engine",
+        "requestId": "req_f366a931bd6b0770ee",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 403,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:04.614444Z",
+        "server": "engine",
+        "requestId": "req_a5f9b030699e5ada88",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 403,
+        "actor": "participant:ada"
+      },
+      {
+        "ts": "2026-11-03T14:07:04.626049Z",
+        "server": "engine",
+        "requestId": "req_2937011e2778f64d09",
+        "method": "PUT",
+        "path": "/api/staff/settings",
+        "status": 403,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:05.712341Z",
+        "server": "engine",
+        "requestId": "req_40dc6d036709a74ac3",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_03ba88bc6984239bfa",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:08.747962Z",
+        "server": "engine",
+        "requestId": "req_9fba5d697a505338b6",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:15.353074Z",
+        "server": "fakepay",
+        "requestId": "req_6e3c735e2f4fa651a5",
+        "method": "GET",
+        "path": "/v1/payments/fp_5670c7a495dea2d284",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:15.364523Z",
+        "server": "engine",
+        "requestId": "req_378724d8f2e25b3f0e",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:15.525182Z",
+        "server": "engine",
+        "requestId": "req_f7c17421aa4b9777d0",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:24.188624Z",
+        "server": "fakepay",
+        "requestId": "req_f74677cbcc8e0c58d6",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:24.352355Z",
+        "server": "fakepay",
+        "requestId": "req_558571c3861b398c45",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:24.364319Z",
+        "server": "fakepay",
+        "requestId": "req_2737044aa605eaf35d",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:39.028391Z",
+        "server": "engine",
+        "requestId": "req_45931f23867e99c20c",
+        "method": "POST",
+        "path": "/login",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:39.041797Z",
+        "server": "engine",
+        "requestId": "req_0b1ed0cd693139575f",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:kofi"
+      },
+      {
+        "ts": "2026-11-03T14:07:39.057787Z",
+        "server": "engine",
+        "requestId": "req_063d40bdd21563193a",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:kofi"
+      },
+      {
+        "ts": "2026-11-03T14:07:39.075377Z",
+        "server": "fakepay",
+        "requestId": "req_8e7f32dd963fc333e1",
+        "method": "POST",
+        "path": "/pay/fp_d08aebc11d8d535a82",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:39.797451Z",
+        "server": "engine",
+        "requestId": "req_f4523f4491f6e9a5c0",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:40.489551Z",
+        "server": "engine",
+        "requestId": "req_7a67606c67e866a27d",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:41.732019Z",
+        "server": "engine",
+        "requestId": "req_7ad3dc1fbaa9fdc6df",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_02aa4592c5c5000041",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:41.931508Z",
+        "server": "engine",
+        "requestId": "req_d7149ebd81ba8fba0a",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:42.087234Z",
+        "server": "engine",
+        "requestId": "req_b409bad62e72ee4b3c",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_02aa4592c5c5000041",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.10206Z",
+        "server": "fakepay",
+        "requestId": "req_f145d8db982b8a0469",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.289874Z",
+        "server": "engine",
+        "requestId": "req_a74395df57f8c71bd1",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.314009Z",
+        "server": "engine",
+        "requestId": "req_fafd4159569a80702b",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.316359Z",
+        "server": "fakepay",
+        "requestId": "req_11dc762f61d1ac0262",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_776e5f1502ea4107f5/replay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.327596Z",
+        "server": "engine",
+        "requestId": "req_c1eb64ddb025a31996",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.329426Z",
+        "server": "fakepay",
+        "requestId": "req_e34ec7cdd1da9d1f95",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_776e5f1502ea4107f5/replay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.34045Z",
+        "server": "engine",
+        "requestId": "req_d3e8cb0b5a4d065754",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:43.342474Z",
+        "server": "fakepay",
+        "requestId": "req_3dc70307b25cb68394",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_776e5f1502ea4107f5/replay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:46.511824Z",
+        "server": "engine",
+        "requestId": "req_54b5f66862584437b5",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:07:58.37019Z",
+        "server": "engine",
+        "requestId": "req_859652f8b5f9746a33",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:07:58.37209Z",
+        "server": "fakepay",
+        "requestId": "req_c484af43996489e6dd",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_6acdf6ee89e789fa49/replay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:07:59.736404Z",
+        "server": "engine",
+        "requestId": "req_4319ab8066f1a501b5",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_03ba88bc6984239bfa",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:08:01.680021Z",
+        "server": "fakepay",
+        "requestId": "req_b078fea9d0837daa81",
+        "method": "GET",
+        "path": "/v1/payments/fp_5670c7a495dea2d284",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:01.694684Z",
+        "server": "fakepay",
+        "requestId": "req_47332e0f8e966f6c07",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:01.828694Z",
+        "server": "engine",
+        "requestId": "req_83fd36e26d78100367",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:08:01.830377Z",
+        "server": "fakepay",
+        "requestId": "req_75af12a00027e287c2",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_9b76f1ded42f64015a/replay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:19.890255Z",
+        "server": "engine",
+        "requestId": "req_4065dbc29f6a2647aa",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 422,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:19.908434Z",
+        "server": "engine",
+        "requestId": "req_eeff14d36bfa5a07f1",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 400,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:08:23.743307Z",
+        "server": "engine",
+        "requestId": "req_b3afd4b9025d13bde3",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:08:32.639892Z",
+        "server": "engine",
+        "requestId": "req_f556ab1235a898cbf7",
+        "method": "POST",
+        "path": "/login",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:32.653712Z",
+        "server": "engine",
+        "requestId": "req_838ae89f829f259f7b",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:musa"
+      },
+      {
+        "ts": "2026-11-03T14:08:32.67067Z",
+        "server": "engine",
+        "requestId": "req_ffd98f57d072205331",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:musa"
+      },
+      {
+        "ts": "2026-11-03T14:08:32.688266Z",
+        "server": "fakepay",
+        "requestId": "req_5a7c3ac44471c4b239",
+        "method": "POST",
+        "path": "/pay/fp_33200d75f93141ab7a",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:33.407494Z",
+        "server": "engine",
+        "requestId": "req_3cdca2e48c0d9bd3f4",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:08:35.765285Z",
+        "server": "engine",
+        "requestId": "req_385ca0b602c764fa65",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_5cda0859b7efbb3804",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:08:36.028781Z",
+        "server": "engine",
+        "requestId": "req_f8e44b21d54792573e",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_5cda0859b7efbb3804",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:08:36.073319Z",
+        "server": "engine",
+        "requestId": "req_55f5f81bf7ec282456",
+        "method": "POST",
+        "path": "/__tools/clock",
+        "status": 200,
+        "actor": "tools"
+      },
+      {
+        "ts": "2026-11-03T14:08:38.270383Z",
+        "server": "fakepay",
+        "requestId": "req_6f44eb9dedf215ed73",
+        "method": "GET",
+        "path": "/dashboard",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:38.285576Z",
+        "server": "engine",
+        "requestId": "req_1ba9127af70419fe5c",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:08:38.28829Z",
+        "server": "fakepay",
+        "requestId": "req_f81af0847ac90172f2",
+        "method": "POST",
+        "path": "/dashboard/events/fpevt_500555e0d7207a6751/release",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:42.481829Z",
+        "server": "fakepay",
+        "requestId": "req_23c4b0163b726ff5c0",
+        "method": "GET",
+        "path": "/v1/payments/fp_33200d75f93141ab7a",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:08:42.618174Z",
+        "server": "engine",
+        "requestId": "req_6e5403b0855d1f2d24",
+        "method": "GET",
+        "path": "/api/staff/participants",
+        "status": 200,
+        "actor": "staff.viewer"
+      },
+      {
+        "ts": "2026-11-03T14:08:50.850516Z",
+        "server": "engine",
+        "requestId": "req_dfbb8c4767018f9c8f",
+        "method": "GET",
+        "path": "/me/referrals",
+        "status": 200,
+        "actor": "participant:musa"
+      },
+      {
+        "ts": "2026-11-03T14:08:50.86386Z",
+        "server": "engine",
+        "requestId": "req_f73b6cfa27f39130e1",
+        "method": "GET",
+        "path": "/me/referrals",
+        "status": 200,
+        "actor": "participant:musa"
+      },
+      {
+        "ts": "2026-11-03T14:09:06.684847Z",
+        "server": "engine",
+        "requestId": "req_6e6413f308384af872",
+        "method": "GET",
+        "path": "/join?ref=MUSA-7Q",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:11.71537Z",
+        "server": "engine",
+        "requestId": "req_a5c86725e7526f471c",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:09:19.405127Z",
+        "server": "engine",
+        "requestId": "req_56f8eb211d84f8937e",
+        "method": "POST",
+        "path": "/join",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:19.420238Z",
+        "server": "engine",
+        "requestId": "req_715b8e0a1f3f22abd5",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:19.43464Z",
+        "server": "engine",
+        "requestId": "req_e2bd73d48213cbd60c",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:19.4497Z",
+        "server": "fakepay",
+        "requestId": "req_ee62088f26f3e6c30d",
+        "method": "POST",
+        "path": "/pay/",
+        "status": 404,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:30.052408Z",
+        "server": "engine",
+        "requestId": "req_d08145d0c81ebb4062",
+        "method": "GET",
+        "path": "/join?ref=MUSA-7Q",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:30.070454Z",
+        "server": "engine",
+        "requestId": "req_3bb3b1289b1eac5d6b",
+        "method": "POST",
+        "path": "/join",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:30.084923Z",
+        "server": "engine",
+        "requestId": "req_361c0413ff277900d3",
+        "method": "POST",
+        "path": "/join",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:33.930407Z",
+        "server": "engine",
+        "requestId": "req_21554cc074bf9b588f",
+        "method": "GET",
+        "path": "/join?ref=MUSA-7Q",
+        "status": 200,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:40.804289Z",
+        "server": "engine",
+        "requestId": "req_baf0c2869d03daa830",
+        "method": "POST",
+        "path": "/join",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:40.823576Z",
+        "server": "engine",
+        "requestId": "req_47124430a900cfd7ea",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:09:40.842784Z",
+        "server": "engine",
+        "requestId": "req_f9de6de2e271865ecb",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:09:40.861839Z",
+        "server": "fakepay",
+        "requestId": "req_da6515a3d2564b49a3",
+        "method": "POST",
+        "path": "/pay/fp_e29ef5d4bc89d6a9ba",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:41.564897Z",
+        "server": "engine",
+        "requestId": "req_a10612111dc6a24197",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:09:41.747482Z",
+        "server": "engine",
+        "requestId": "req_64d7647e597a4b1c59",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_0ab60cd71da03d2c71",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:09:41.991612Z",
+        "server": "engine",
+        "requestId": "req_6a5a1d47efceb68342",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:09:42.285548Z",
+        "server": "engine",
+        "requestId": "req_76d6d19e9663ee054d",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:09:44.701192Z",
+        "server": "engine",
+        "requestId": "req_dd53a786c020d81f40",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_0ab60cd71da03d2c71",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:09:57.213816Z",
+        "server": "engine",
+        "requestId": "req_7c130f5e75615a0d4a",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:09:57.252541Z",
+        "server": "engine",
+        "requestId": "req_68e2514891b0780269",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:09:57.27229Z",
+        "server": "fakepay",
+        "requestId": "req_f7c1ce1ede6d6deb5d",
+        "method": "POST",
+        "path": "/pay/fp_81e569b13561de08c8",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:09:57.990689Z",
+        "server": "engine",
+        "requestId": "req_4c5b41b5b0af537f4c",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:09:58.69583Z",
+        "server": "engine",
+        "requestId": "req_9fdcd419ece7f8db20",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:09:59.73747Z",
+        "server": "engine",
+        "requestId": "req_c4fcc68c232abece09",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_ee5e6b997db571178d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:09:59.94402Z",
+        "server": "engine",
+        "requestId": "req_ab2f41ea72466481cd",
+        "method": "POST",
+        "path": "/api/automation/activity",
+        "status": 201,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:10:00.090862Z",
+        "server": "engine",
+        "requestId": "req_2a2e37332dac44df99",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_ee5e6b997db571178d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:10:01.592314Z",
+        "server": "engine",
+        "requestId": "req_5539cf030fcaaf8d66",
+        "method": "GET",
+        "path": "/me/referrals",
+        "status": 200,
+        "actor": "participant:musa"
+      },
+      {
+        "ts": "2026-11-03T14:10:01.604693Z",
+        "server": "engine",
+        "requestId": "req_1459e1fe22ec724700",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 200,
+        "actor": "staff.admin"
+      },
+      {
+        "ts": "2026-11-03T14:10:02.726552Z",
+        "server": "engine",
+        "requestId": "req_c6c13af8c79df290e8",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_0ab60cd71da03d2c71",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:10:17.671126Z",
+        "server": "engine",
+        "requestId": "req_9283666f2205a40bf4",
+        "method": "POST",
+        "path": "/checkout/quote",
+        "status": 200,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:10:17.690181Z",
+        "server": "engine",
+        "requestId": "req_fa95c9aeb61df49c0a",
+        "method": "POST",
+        "path": "/checkout/pay",
+        "status": 303,
+        "actor": "participant:chidi"
+      },
+      {
+        "ts": "2026-11-03T14:10:17.708828Z",
+        "server": "fakepay",
+        "requestId": "req_a0a23ae54d34d1b746",
+        "method": "POST",
+        "path": "/pay/fp_2acc5bf199c700582f",
+        "status": 303,
+        "actor": "anonymous"
+      },
+      {
+        "ts": "2026-11-03T14:10:18.431344Z",
+        "server": "engine",
+        "requestId": "req_ffbdb8d7c3ec776831",
+        "method": "POST",
+        "path": "/webhooks/fakepay",
+        "status": 200,
+        "actor": "fakepay"
+      },
+      {
+        "ts": "2026-11-03T14:10:20.754625Z",
+        "server": "engine",
+        "requestId": "req_d78ea1dedd5829f826",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_61ca9b5e1bd216cb74",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:14:23.360797Z",
+        "server": "engine",
+        "requestId": "req_6ba407defedd11866f",
+        "method": "POST",
+        "path": "/api/staff/refunds",
+        "status": 404,
+        "actor": "staff.admin"
+      },
+      {
+        "ts": "2026-11-03T14:18:26.730894Z",
+        "server": "engine",
+        "requestId": "req_7c96d035dafa431229",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_be074f3bb37f4eae9d",
+        "status": 200,
+        "actor": "automation"
+      },
+      {
+        "ts": "2026-11-03T14:19:14.782341Z",
+        "server": "engine",
+        "requestId": "req_2cd74b1eb3b1394844",
+        "method": "GET",
+        "path": "/api/automation/payments/pay_c1ae199d2053baed83",
+        "status": 200,
+        "actor": "automation"
+      }
+    ]
+  },
+  "signature": "df071e5d38bff75337f1c1ebda7c87ea9d137557c30bf7263326a66453650b54"
+}
