@@ -15,14 +15,14 @@ test.describe('n8n automation (Section B)', () => {
     test('sends one [TEST] email to the staff inbox only, even if the payload asks for another recipient', async ({ request }) => {
       const before = await mailCount(request, STAFF_INBOX);
       const res = await testRun(request, {
-        templateKey: 'solace-intro', variables: { ...introVars, email: 'someone@gmail.com' }, requestId: `req_${uid()}`,
+        templateKey: 'solace-intro', variables: { ...introVars, email: 'someone@outside.example' }, requestId: `req_${uid()}`,
       });
       expect(res.status()).toBe(200);
       const body = await res.json();
       expect(body).toMatchObject({ ok: true, outcome: 'sent', to: STAFF_INBOX });
       expect(body.subject).toMatch(/^\[TEST\] /);
       expect(await settledMailCount(request, STAFF_INBOX, before + 1)).toBe(before + 1);
-      expect(await mailCount(request, 'someone@gmail.com')).toBe(0);
+      expect(await mailCount(request, 'someone@outside.example')).toBe(0);
     });
 
     test('double submit with the same requestId sends a single email', async ({ request }) => {
