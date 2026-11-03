@@ -8,7 +8,7 @@ End-to-end, API and automation tests for the Tidewave stack. Chromium only; trac
 ```bash
 npm ci
 npx playwright install chromium
-npx playwright test                       # whole suite (≈ 3.5 min, 71 tests)
+npx playwright test                       # whole suite (≈ 4 min, 81 tests)
 npx playwright test --project=api         # engine, leads service, n8n automation
 npx playwright test --project=storefront  # public website + FakePay (browser)
 npx playwright test --project=ops         # ops console (needs `npm run dev` in ops-console/, port 7300)
@@ -54,6 +54,8 @@ tickets — closed system, cannot be fixed here — and OPS-001 (needs a real st
 | `tests/storefront/visitor.spec.ts` | preview player, opt-in → exactly one intro email, validation; TW-013 |
 | `tests/storefront/persona.spec.ts` | login, `/me`, contributions, wrong password, auth redirect; TW-004, TW-012 |
 | `tests/storefront/checkout.spec.ts` | full ₦2,000 backing through FakePay UI → Listener + one confirmation email, declined card, terms required, double-click Pay = one payment; TW-011, TW-017 |
+| `tests/storefront/email-templates.spec.ts` | Section D templates rendered at 375px: brief wording present, forbidden wording absent, CTA/unsubscribe/preheader, no overflow, fallbacks, URL guard |
+| `tests/ops/messages-test.spec.ts` | Section D `/messages/test`: approved-only dropdown, generated fields (labels, required, placeholders), sandboxed live preview, validation, one email to staff-test on double click, duplicate note, error path |
 | `tests/ops/ops-console.spec.ts` | Admin/Viewer sign-in, leads, lead details + activity, payments, viewer has no refund (UI + 403 API), double-click Refund = one request, sign out; OPS-001 (open), OPS-002…005 (regression) |
 
 ## Ticket → test map

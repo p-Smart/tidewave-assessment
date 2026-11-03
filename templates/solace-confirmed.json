@@ -22,6 +22,12 @@
       "label": "Level Name",
       "required": true,
       "example": "Supporter"
+    },
+    {
+      "name": "unsubscribeUrl",
+      "label": "Unsubscribe URL",
+      "required": false,
+      "example": "mailto:hello@tidewave.test?subject=Unsubscribe"
     }
   ]
 }

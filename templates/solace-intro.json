@@ -16,6 +16,12 @@
       "label": "Campaign URL",
       "required": true,
       "example": "http://localhost:7080/campaigns/harmattan-sessions"
+    },
+    {
+      "name": "unsubscribeUrl",
+      "label": "Unsubscribe URL",
+      "required": false,
+      "example": "mailto:hello@tidewave.test?subject=Unsubscribe"
     }
   ]
 }

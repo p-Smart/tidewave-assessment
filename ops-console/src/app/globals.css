@@ -254,3 +254,87 @@ body {
   color: #334155;
   border: 1px solid #e2e8f0;
 }
+
+/* ---- Test email screen (/messages/test) ---- */
+.test-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.4fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .test-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 0 0 1rem;
+}
+
+.legend {
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.required-mark {
+  color: #b91c1c;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0;
+}
+
+.field-error {
+  font-size: 0.8rem;
+  color: #991b1b;
+  margin: 0.25rem 0 0;
+}
+
+.input-invalid {
+  border-color: #dc2626;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.preview-card {
+  position: sticky;
+  top: 1rem;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.preview-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.preview-subject {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.preview-frame {
+  width: 100%;
+  height: 640px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: #ffffff;
+}

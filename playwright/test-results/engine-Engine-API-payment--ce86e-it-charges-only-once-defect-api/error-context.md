@@ -12,7 +12,7 @@
 # Error details
 
 ```
-Error: FakePay sessions for one quote: http://localhost:7090/pay/fp_153bb4f55151391cae, http://localhost:7090/pay/fp_548c19803be76228fa
+Error: FakePay sessions for one quote: http://localhost:7090/pay/fp_a5c7c0daf66e8c20e0, http://localhost:7090/pay/fp_4bb5652bdcfbfcaab6
 
 expect(received).toBe(expected) // Object.is equality
 
@@ -124,7 +124,7 @@ Received: 2
   168 |       const [first, second] = await Promise.all([1, 2].map(() => bayo.post('/checkout/pay', { form: { quote: quoteId }, maxRedirects: 0 })));
   169 |       const sessions = new Set([first, second].map((r) => r.headers()['location']));
 > 170 |       expect(sessions.size, `FakePay sessions for one quote: ${[...sessions].join(', ')}`).toBe(1);
-      |                                                                                            ^ Error: FakePay sessions for one quote: http://localhost:7090/pay/fp_153bb4f55151391cae, http://localhost:7090/pay/fp_548c19803be76228fa
+      |                                                                                            ^ Error: FakePay sessions for one quote: http://localhost:7090/pay/fp_a5c7c0daf66e8c20e0, http://localhost:7090/pay/fp_4bb5652bdcfbfcaab6
   171 |     });
   172 | 
   173 |     test('[TW-006] a payment confirmed after it expired is still credited (PR7) @defect', async ({ request }) => {

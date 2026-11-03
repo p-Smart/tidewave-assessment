@@ -48,7 +48,7 @@ Expected: not 200
             - cell "Dayo Cole dayo.cole@example.test" [ref=f2e20]: Dayo Coledayo.cole@example.test
           - row [ref=f2e21]:
             - rowheader "Date" [ref=f2e22]
-            - cell "1 Nov 2026, 15:06" [ref=f2e23]
+            - cell "1 Nov 2026, 15:25" [ref=f2e23]
           - row [ref=f2e24]:
             - rowheader "Backing" [ref=f2e25]
             - cell "$6.89" [ref=f2e26]
@@ -64,7 +64,7 @@ Expected: not 200
           - row [ref=f2e36]:
             - rowheader "Reference" [ref=f2e37]
             - cell [ref=f2e38]:
-              - code [ref=f2e39]: pay_c592892b654abcb789
+              - code [ref=f2e39]: pay_29b295df822e0ad65d
       - paragraph [ref=f2e40]: Tidewave Music · 12 Example Street, Lagos · hello@tidewave.test
   - contentinfo [ref=f2e41]:
     - generic [ref=f2e42]: Tidewave Music is a fictional company made for a test. Backing a campaign is voluntary. It is not employment and not an investment.

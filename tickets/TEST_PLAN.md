@@ -33,3 +33,4 @@
 8. **Referral for withdrawn/closed campaign** — does the ₦2,000 cap apply per campaign including closed `coastline-ep`?
 9. **"You're in" for instalments below Listener** — what should the confirmation page say when the confirmed total is still below ₦2,000?
 10. **Checkout currency switch** — on `/checkout` the currency `<select>` has `data-keep="true"`, so changing it relabels the amount field but keeps NGN quick-pick values. Intended?
+11. **Unsubscribe page** — the public site has no `/unsubscribe` (404), yet both briefs require an unsubscribe link. The templates take an optional `unsubscribeUrl` and fall back to `mailto:hello@tidewave.test?subject=Unsubscribe`. Which page should the link go to once it exists?

@@ -22,6 +22,12 @@
       "label": "Screening URL",
       "required": true,
       "example": "http://localhost:7080/street-team/screening"
+    },
+    {
+      "name": "unsubscribeUrl",
+      "label": "Unsubscribe URL",
+      "required": false,
+      "example": "mailto:hello@tidewave.test?subject=Unsubscribe"
     }
   ]
 }

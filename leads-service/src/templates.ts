@@ -90,14 +90,14 @@ export function renderTemplate(
   if (meta.variables && Array.isArray(meta.variables)) {
     for (const v of meta.variables) {
       // Missing values render as empty so template fallbacks apply, never "undefined" (LS-007).
-      renderContext[v.name] = variables?.[v.name] ?? '';
+      renderContext[v.name] = safeValue(v.name, variables?.[v.name]);
     }
   }
 
   // Also include any extra user variables
   for (const [k, v] of Object.entries(variables || {})) {
     if (renderContext[k] === undefined) {
-      renderContext[k] = v;
+      renderContext[k] = safeValue(k, v);
     }
   }
 
@@ -110,12 +110,50 @@ export function renderTemplate(
   }
 
   const html = htmlTemplate(renderContext);
-  // Plain text fallback by stripping html tags
-  const text = html.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+  const text = htmlToText(html);
 
   return {
     subject,
     html,
     text,
   };
+}
+
+/**
+ * Variables are HTML-escaped by Handlebars, but a link target is still live. Variables named
+ * "...Url" must be http(s) or mailto links; anything else (javascript:, data:, …) renders as
+ * empty so the template's fallback link is used instead.
+ */
+function safeValue(name: string, value: unknown): string {
+  if (value === undefined || value === null) return '';
+  const str = typeof value === 'string' ? value : String(value);
+  if (/url$/i.test(name) && str !== '' && !/^(https?:\/\/|mailto:)/i.test(str.trim())) {
+    return '';
+  }
+  return str;
+}
+
+/** Plain-text part of the email: drop <head> (title, styles) and hidden preheaders, keep line breaks. */
+export function htmlToText(html: string): string {
+  const entities: Record<string, string> = {
+    '&nbsp;': ' ', '&zwnj;': '', '&middot;': '·', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'",
+  };
+  return html
+    .replace(/<head[\s\S]*?<\/head>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<div[^>]*display:\s*none[^>]*>[\s\S]*?<\/div>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (_m, href, label) => {
+      const text = label.replace(/<[^>]*>/g, '').trim();
+      return text && text !== href ? `${text} (${href})` : href;
+    })
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|h[1-6]|tr|div|li)>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&[a-z#0-9]+;/gi, (e) => entities[e.toLowerCase()] ?? e)
+    .split('\n')
+    .map((line) => line.replace(/\s+/g, ' ').trim())
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }

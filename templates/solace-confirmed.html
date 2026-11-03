@@ -1,16 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
-  <title>Backing Confirmed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Your Solace Avenue backing is confirmed</title>
+  <style>
+    @media only screen and (max-width: 480px) {
+      .container { width: 100% !important; }
+      .content { padding: 20px 16px !important; }
+      .cta a { display: block !important; width: 100% !important; box-sizing: border-box !important; }
+      h1 { font-size: 22px !important; line-height: 28px !important; }
+    }
+  </style>
 </head>
-<body>
-  <div>
-    <h2>Thanks {{firstName}},</h2>
-    <p>We received your backing of {{amountText}}.</p>
-    <p>Your current backing level is now {{levelName}}.</p>
-    <p><a href="http://localhost:7080/me">View account</a></p>
-    <p>Cheers,<br>Tidewave Music</p>
+<body style="margin:0; padding:0; background-color:#f4f5f7; -webkit-text-size-adjust:100%;">
+  <div style="display:none; max-height:0; overflow:hidden; font-size:1px; line-height:1px; color:#f4f5f7; mso-hide:all;">
+    FakePay has confirmed your backing{{#if amountText}} of {{amountText}}{{/if}}. Thank you.&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
   </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f5f7;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+        <table role="presentation" class="container" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px; background-color:#ffffff; border-radius:8px;">
+          <tr>
+            <td style="padding:20px 32px; background-color:#3b2a4f; border-radius:8px 8px 0 0; font-family:Georgia, 'Times New Roman', serif; font-size:18px; color:#ffffff;">
+              Solace Avenue &middot; Harmattan Sessions
+            </td>
+          </tr>
+          <tr>
+            <td class="content" style="padding:32px; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:24px; color:#1f2933;">
+              <h1 style="margin:0 0 16px; font-size:24px; line-height:32px; color:#3b2a4f;">
+                Thanks {{#if firstName}}{{firstName}}{{else}}there{{/if}},
+              </h1>
+              <p style="margin:0 0 16px;">Your backing{{#if amountText}} of <strong>{{amountText}}</strong>{{/if}} has been confirmed by FakePay.</p>
+              <p style="margin:0 0 24px;">
+                {{#if levelName}}Your backing level is now <strong>{{levelName}}</strong>.{{else}}Your confirmed backing has been added to your account. Once it reaches a backing level, the level will show on your account page.{{/if}}
+              </p>
+              <table role="presentation" class="cta" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;">
+                <tr>
+                  <td align="center" style="border-radius:6px; background-color:#3b2a4f;">
+                    <a href="http://localhost:7080/me" target="_blank"
+                       style="display:inline-block; padding:14px 28px; font-family:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:6px;">
+                      View my account and receipt
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0;">Cheers,<br>Tidewave Music</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 32px; border-top:1px solid #e4e7eb; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; color:#52606d;">
+              <p style="margin:0 0 12px;">Backing is voluntary. It is not an investment, not a loan and not employment.</p>
+              <p style="margin:0 0 12px;">Tidewave Music &middot; 12 Example Street, Lagos &middot; hello@tidewave.test</p>
+              <p style="margin:0;">
+                You received this email because you backed a Solace Avenue campaign.
+                <a href="{{#if unsubscribeUrl}}{{unsubscribeUrl}}{{else}}mailto:hello@tidewave.test?subject=Unsubscribe{{/if}}" style="color:#52606d;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
